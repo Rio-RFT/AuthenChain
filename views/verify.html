@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực Sản Phẩm & Nguồn Gốc | AuthenChain</title>
+    <link rel="icon" href="Pics/logo.png">
+    <link rel="stylesheet" href="minimal.css">
+    <style>
+        .result-box {
+            display: none;
+            margin-top: 2rem;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .status-badge-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #ecfdf5;
+            color: #059669;
+            padding: 0.35rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge-warning {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.35rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -2rem;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--text-main);
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 0 1px var(--border-color);
+        }
+
+        .timeline-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timeline-meta {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <span class="brand-badge">AC</span>
+                <span>AuthenChain</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="createCodes.html" class="nav-link">Nhà sản xuất</a></li>
+                <li><a href="createRetailer.html" class="nav-link">Đại lý bán lẻ</a></li>
+                <li><a href="verify.html" class="nav-link btn-link active">Tra cứu / Xác thực</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <section class="page-header">
+            <div class="page-tag">Truy Xuất Nguồn Gốc & Chống Giả</div>
+            <h1 class="page-title">Xác Thực Mã Sản Phẩm</h1>
+            <p class="page-subtitle">Nhập mã định danh băm hoặc quét mã QR in trên tem bao bì để tra cứu dữ liệu gốc được lưu trữ trực tiếp trên Smart Contract.</p>
+        </section>
+
+        <!-- Search Form -->
+        <div class="form-container">
+            <form id="verifyForm" onsubmit="handleVerify(event)">
+                <div class="form-group">
+                    <label for="productCodeInput" class="form-label">Mã Định Danh Sản Phẩm (Product Code / Hash)</label>
+                    <input type="text" id="productCodeInput" class="form-input" placeholder="Dán mã băm (ví dụ: b8867a5089f214...)" required>
+                    <div class="form-helper">Mã này có thể lấy từ việc quét tem QR trên sản phẩm.</div>
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+                    <button type="submit" id="submitBtn" class="btn btn-primary" style="flex: 1;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        Kiểm Tra Trên Sổ Cái
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Verification Results -->
+        <div id="resultBox" class="result-box" style="max-width: 680px; margin-left: auto; margin-right: auto;">
+            <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span id="statusBadge" class="status-badge-verified">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Đã Xác Thực Trên Blockchain
+                    </span>
+                    <h2 id="resBrand" style="font-size: 1.35rem; font-weight: 700; margin-top: 0.5rem;">-</h2>
+                </div>
+                <div id="resModel" style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted);">-</div>
+            </div>
+
+            <div style="padding: 1.75rem 2rem;">
+                <div style="margin-bottom: 1.5rem;">
+                    <span class="data-label">Mô tả sản phẩm</span>
+                    <p id="resDesc" style="font-size: 0.95rem; color: var(--text-main); margin-top: 0.25rem;">-</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <span class="data-label">Nhà sản xuất</span>
+                        <div id="resManufacturer" style="font-weight: 600; font-size: 0.95rem;">-</div>
+                    </div>
+                    <div>
+                        <span class="data-label">Địa điểm sản xuất</span>
+                        <div id="resLocation" style="font-weight: 600; font-size: 0.95rem;">-</div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="data-label">Hành trình chuỗi cung ứng (Blockchain Provenance)</span>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-title">Xuất xưởng & Đăng ký Smart Contract</div>
+                            <div class="timeline-meta" id="resTimestamp">Thời gian: -</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: var(--accent-emerald);"></div>
+                            <div class="timeline-title">Xác thực tính toàn vẹn nguồn gốc</div>
+                            <div class="timeline-meta">Dữ liệu đối chiếu khớp 100% với Sổ cái Blockchain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
+            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
+        </div>
+    </footer>
+
+    <script>
+        function handleVerify(e) {
+            e.preventDefault();
+            var code = document.getElementById('productCodeInput').value.trim();
+            if (!code) return;
+
+            var submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Đang kiểm tra...";
+
+            fetch('/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            })
+            .then(function(res) {
+                if (!res.ok) throw new Error('Không tìm thấy hoặc có lỗi');
+                return res.json();
+            })
+            .then(function(data) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Kiểm Tra Trên Sổ Cái";
+
+                if (!data || !data.name) {
+                    alert('Mã sản phẩm không tồn tại trên hệ thống Blockchain!');
+                    return;
+                }
+
+                document.getElementById('resultBox').style.display = 'block';
+                document.getElementById('resBrand').innerText = data.name || 'Không rõ';
+                document.getElementById('resModel').innerText = "Model: " + (data.model || 'N/A');
+                document.getElementById('resDesc').innerText = data.description || 'Không có mô tả';
+                document.getElementById('resManufacturer').innerText = data.manufacturerName || 'N/A';
+                document.getElementById('resLocation').innerText = data.manufacturerLocation || 'N/A';
+                document.getElementById('resTimestamp').innerText = "Ngày sản xuất: " + (data.manufacturerTimestamp || 'N/A');
+            })
+            .catch(function(err) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Kiểm Tra Trên Sổ Cái";
+                alert('Không tìm thấy thông tin sản phẩm trên Blockchain hoặc mạng bị lỗi!');
+            });
+        }
+    </script>
+</body>
+</html>

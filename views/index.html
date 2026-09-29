@@ -1,201 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-@import url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,800');
-
-@media (min-width: 500px) {
-  .col-sm-6 {
-    width: 50%;
-  }
-}
-html, body {
-  height: 100%;
-  min-height: 18em;
-}
-
-.frontend-side {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74452/website-code.png");
-}
-
-.uiux-side {
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74452/website-post-its.png");
-}
-
-.split-pane {
-  padding-top: 1em;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  height: 50%;
-  min-height: 9em;
-  font-size: 2em;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-	font-weight:300;
-;
-}
-@media(min-width: 500px) {
-  .split-pane {
-    padding-top: 2em;
-    height: 100%;
-  }
-}
-.split-pane > div {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  text-align: center;
-}
-.split-pane > div .text-content {
-  line-height: 1.6em;
-  margin-bottom: 1em;
-}
-.split-pane > div .text-content .big {
-  font-size: 2em;
-}
-.split-pane > div img {
-  height: 1.3em;
-}
-@media (max-width: 500px) {
-  .split-pane > div img {
-    display:none;
-  }
-}
-.split-pane button, .split-pane a.button {
-  font-family: 'Open Sans', sans-serif;
-	font-weight:800;
-  background: none;
-  border: 1px solid white;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  width: 15em;
-  padding: 0.7em;
-  font-size: 0.5em;
-  -moz-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  -webkit-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-  text-decoration: none;
-  color: white;
-  display: inline-block;
-	cursor: pointer;
-}
-.split-pane button:hover, .split-pane a.button:hover {
-  text-decoration: none;
-  background-color: white;
-  border-color: white;
-	cursor: pointer;
-}
-.uiux-side.split-pane button:hover, .split-pane a.button:hover {
-  color: violet;
-}
-.frontend-side.split-pane button:hover, .split-pane a.button:hover {
-  color: blue;
-}
-
-#split-pane-or {
-  font-size: 2em;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  text-align: center;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-@media (max-width: 925px) {
-  #split-pane-or {
-    top:15%;
-  }
-}
-#split-pane-or > div img {
-  height: 2.5em;
-}
-@media (max-width: 500px) {
-  #split-pane-or {
-    position: absolute;
-    top: 50px;
-  }
-  #split-pane-or > div img {
-    height:2em;
-  }
-}
-@media(min-width: 500px) {
-  #split-pane-or {
-    font-size: 3em;
-  }
-}
-.big {
-  font-size: 2em;
-}
-
-#slogan {
-  position: absolute;
-  width: 100%;
-  z-index: 100;
-  text-align: center;
-  vertical-align: baseline;
-  top: 0.5em;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.4em;
-}
-@media(min-width: 500px) {
-  #slogan {
-    top: 5%;
-    font-size: 1.8em;
-  }
-}
-#slogan img {
-  height: 0.7em;
-}
-.bold {
-	text-transform:uppercase;
-}
-.big {
-	font-weight:800;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthenChain | Sổ cái Chuỗi Cung Ứng & Xác Thực Sản Phẩm</title>
+    <link rel="icon" href="Pics/logo.png">
+    <link rel="stylesheet" href="minimal.css">
 </head>
 <body>
 
-<div class='split-pane col-xs-12 col-sm-6 uiux-side'>
-        <div>
-          <img src='https://bit.ly/BCR-design'>
-          <div class='text-content'>
-            <div class="bold">Retailer</div>
-            <div class='big'>Registration</div>
-          </div>
-          <a class='button' href="http://localhost:8080/createRetailer">
-            REGISTER
-          </a>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <span class="brand-badge">AC</span>
+                <span>AuthenChain</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">Trang chủ</a></li>
+                <li><a href="createCodes.html" class="nav-link">Nhà sản xuất</a></li>
+                <li><a href="createRetailer.html" class="nav-link">Đại lý bán lẻ</a></li>
+                <li><a href="verify.html" class="nav-link btn-link">Tra cứu / Xác thực</a></li>
+            </ul>
         </div>
-      </div>
+    </header>
 
-<div class='split-pane col-xs-12 col-sm-6 frontend-side'>
-        <div>
-          <img src='https://bit.ly/bcr-dev'>
-          <div class='text-content'>
-            <div class="bold">Generate</div>
-            <div class='big'>QR Code</div>
-          </div>
-          <a class='button' href="http://localhost:8080/createCodes">
-            GENERATE
-          </a>
-        </div>
-      </div>
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <section class="page-header">
+            <div class="page-tag">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Blockchain Ledger & Anti-Counterfeit
+            </div>
+            <h1 class="page-title">Sổ Cái Chuỗi Cung Ứng & Xác Thực Chống Hàng Giả</h1>
+            <p class="page-subtitle">Nền tảng minh bạch hóa toàn bộ hành trình sản phẩm từ nhà máy đến người tiêu dùng, loại bỏ nguy cơ hàng giả bằng công nghệ sổ cái phân tán.</p>
+        </section>
 
-      <div id='split-pane-or'>
-        <div>
-          <img src='..\Pics\logo.png'>
+        <!-- Feature Cards -->
+        <div class="card-grid">
+            <!-- Manufacturer Card -->
+            <div class="minimal-card">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Cổng Nhà Sản Xuất</h2>
+                <p class="card-desc">Tạo định danh tài sản số trên Smart Contract, gán mã băm bảo mật và sinh tem QR định danh duy nhất cho từng sản phẩm xuất xưởng.</p>
+                <a href="createCodes.html" class="btn btn-primary">Tạo Mã QR Sản Phẩm &rarr;</a>
+            </div>
+
+            <!-- Retailer Card -->
+            <div class="minimal-card">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Cổng Đại Lý / Phân Phối</h2>
+                <p class="card-desc">Đăng ký định danh đại lý lên Blockchain, tiếp nhận lô hàng từ nhà sản xuất và xác nhận chuyển giao quyền sở hữu cho người mua.</p>
+                <a href="createRetailer.html" class="btn btn-secondary">Đăng Ký Đại Lý &rarr;</a>
+            </div>
+
+            <!-- Consumer Verification Card -->
+            <div class="minimal-card">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Xác Thực & Quét Mã</h2>
+                <p class="card-desc">Cổng tra cứu công khai cho người tiêu dùng. Quét mã QR qua Camera để xác minh hàng chính hãng và kiểm tra toàn bộ lịch sử nguồn gốc.</p>
+                <a href="verify.html" class="btn btn-secondary">Kiểm Tra Ngay &rarr;</a>
+            </div>
         </div>
-      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
+            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
+        </div>
+    </footer>
+
+</body>
+</html>

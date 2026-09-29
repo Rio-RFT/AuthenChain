@@ -455,6 +455,11 @@ app.get('/createRetailer', (req, res) => {
     res.sendFile('views/createRetailer.html', { root: __dirname });
 });
 
+// Verification portal
+app.get('/verify', (req, res) => {
+    res.sendFile('views/verify.html', { root: __dirname });
+});
+
 // Main website which has 2 routers - manufacturer & retailer
 app.get('/', (req, res) => {
     res.sendFile('views/index.html', { root: __dirname });

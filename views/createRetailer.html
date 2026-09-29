@@ -1,107 +1,99 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="C:\Users\Thomas AJ\Desktop\node_try\style1.css" rel="stylesheet" type="text/css">
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
-
-
-    <link rel="icon" href="Favicon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <title>AuthentiFi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Đại Lý | AuthenChain</title>
+    <link rel="icon" href="Pics/logo.png">
+    <link rel="stylesheet" href="minimal.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-    <div class="container">
-    <a class="navbar-brand" href="http://localhost:8080/"  style="color:#1fa667">AuthentiFi</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8080" style="color:#1fa667">Generate QR Code</a>
-            </li>
-        </ul>
-
-    </div>
-    </div>
-</nav>
-
-<main class="myform">
-    <div  class="cotainer">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                    <div class="card">
-                        <div style="background-color: #1fa667;color: #ffffff"  class="card-header">Retailer Registration</div>
-                        <div class="card-body">
-                            <form name="myform" onsubmit="return validform()" action="http://localhost:8080/retailerSignup" method="POST" >
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="name" class="form-control" name="name">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="email" class="form-control" name="email">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="location" class="col-md-4 col-form-label text-md-right">Location</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="location" class="form-control" name="location">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                                    <div class="col-md-6">
-                                        <input type="password" id="password" class="form-control" name="password">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="pass" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
-                                    <div class="col-md-6">
-                                        <input type="password" id="pass" class="form-control" name="pass">
-                                    </div>
-                                </div>
-
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                        Register
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-            </div>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <span class="brand-badge">AC</span>
+                <span>AuthenChain</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="createCodes.html" class="nav-link">Nhà sản xuất</a></li>
+                <li><a href="createRetailer.html" class="nav-link active">Đại lý bán lẻ</a></li>
+                <li><a href="verify.html" class="nav-link btn-link">Tra cứu / Xác thực</a></li>
+            </ul>
         </div>
-    </div>
+    </header>
 
-</main>
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <section class="page-header">
+            <div class="page-tag">Đại Lý Bán Lẻ (Retailer)</div>
+            <h1 class="page-title">Đăng Ký Thông Tin Đại Lý</h1>
+            <p class="page-subtitle">Khởi tạo hồ sơ đại lý phân phối chính thức trên hệ thống sổ cái để được cấp quyền tiếp nhận và phân phối sản phẩm từ nhà sản xuất.</p>
+        </section>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <div class="form-container">
+            <form name="retailerForm" action="/retailerSignup" method="POST" onsubmit="return validatePassword()">
+                <div class="form-group">
+                    <label for="name" class="form-label">Tên Đại Lý / Doanh Nghiệp (Retailer Name)</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Ví dụ: Đại lý FPT Shop, CellphoneS..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Địa Chỉ Email (E-Mail Address)</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="contact@retailer.com" required>
+                    <div class="form-helper">Email sẽ được băm định danh (MD5 Hash) khi lưu trên Smart Contract.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location" class="form-label">Địa Chỉ / Khu Vực (Location)</label>
+                    <input type="text" id="location" name="location" class="form-input" placeholder="Ví dụ: Quận 1, TP. Hồ Chí Minh" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Mật Khẩu (Password)</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Tối thiểu 6 ký tự" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pass" class="form-label">Xác Nhận Mật Khẩu (Confirm Password)</label>
+                    <input type="password" id="pass" name="pass" class="form-input" placeholder="Nhập lại mật khẩu" required>
+                </div>
+
+                <div style="margin-top: 1.75rem;">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="8.5" cy="7.5" r="4"/>
+                            <line x1="20" y1="8" x2="20" y2="14"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                        Đăng Ký & Xác Thực Đại Lý
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
+            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
+        </div>
+    </footer>
+
+    <script>
+        function validatePassword() {
+            var p1 = document.getElementById('password').value;
+            var p2 = document.getElementById('pass').value;
+            if (p1 !== p2) {
+                alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

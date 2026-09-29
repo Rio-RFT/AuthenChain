@@ -1,126 +1,167 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="C:\Users\Thomas AJ\Desktop\node_try\style1.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="qrcode.js"></script>
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
-
-
-    <link rel="icon" href="Favicon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <title>AuthentiFi</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mã QR Sản Phẩm Đã Khởi Tạo | AuthenChain</title>
+    <link rel="icon" href="../Pics/logo.png">
+    <link rel="stylesheet" href="../minimal.css">
     <script type="text/javascript" src="qrcode.js"></script>
     <style>
-            h2 {
-              text-align:center;
+        @media print {
+            .navbar, .footer, .no-print, .page-header {
+                display: none !important;
             }
-
-            p {
-              text-align:center;
+            body {
+                background: #fff;
             }
-    </style>
-
-
-
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-    <div class="container">
-    <a class="navbar-brand" href="http://localhost:8080" style="color:#1fa667">AuthentiFi</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="file:///C:/Users/Thomas%20AJ/Desktop/node_try/main.html#">Home</a>
-                </li>
-            </ul>
-
-    </div> -->
-    </div>
-</nav>
-
-    <div  class="cotainer">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                    <div class="card">
-                        <div style="background-color: #1fa667;text-align:center;color: #ffffff"  class="card-header">Generated QR Code</div>
-                        <div class="card-body">
-                                <div class="container">
-                                <div class="row">
-                                    <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
-                                        <div class="well details">
-                                            <div class="col-sm-12">
-                                                <div class="col-xs-12 col-sm-8">
-                                                    <h2 style="text-decoration:underline;"justify-content-center id="brand"></h2>
-                                                    <p justify-content-center id="model"></p>
-                                                    <p justify-content-center id="description"></p>
-                                                    <p id="manufacturerName"></p>
-                                                    <p id="manufacturerLocation"></p>
-                                                </div>
-                                                            <div class="col-xs-12 col-sm-4 col-lg-1 text-center" id="qrcode" style="width:200px; height:200px; margin-top:15px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                   </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</main>
-<script type="text/javascript">
-function readTextFile(file)
-{
-    console.log("IN");
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                var lines = allText.split('\n');
-                var qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text:lines[0],
-                    width : 200,
-                    height : 200
-                });
-                document.getElementById('brand').innerHTML =lines[1].toString();
-                document.getElementById('model').innerHTML ="<strong>Model: </strong>"+lines[2].toString();
-                document.getElementById('description').innerHTML ="<strong>Description: </strong>"+lines[3].toString();
-                document.getElementById('manufacturerName').innerHTML ="<strong>Manufacturer Name: </strong>"+lines[4].toString();
-                document.getElementById('manufacturerLocation').innerHTML ="<strong>Manufacturer Location: </strong>"+lines[5].toString();
+            .qr-details-container {
+                border: 1px solid #000;
+                box-shadow: none;
+                margin: 0 auto;
             }
         }
-    }
-    rawFile.send(null);
-}
-readTextFile("code.txt");
-</script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar no-print">
+        <div class="nav-container">
+            <a href="../index.html" class="brand-logo">
+                <span class="brand-badge">AC</span>
+                <span>AuthenChain</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="../createCodes.html" class="nav-link active">Nhà sản xuất</a></li>
+                <li><a href="../createRetailer.html" class="nav-link">Đại lý bán lẻ</a></li>
+                <li><a href="../verify.html" class="nav-link btn-link">Tra cứu / Xác thực</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <section class="page-header no-print">
+            <div class="page-tag" style="background: #ecfdf5; color: #059669;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Ghi Nhận Thành Công Trên Blockchain
+            </div>
+            <h1 class="page-title">Chứng Nhận Số & Tem QR Định Danh</h1>
+            <p class="page-subtitle">Sản phẩm đã được lưu trữ bất biến trên Smart Contract. Tem QR dưới đây dùng để dán lên bao bì phục vụ truy xuất nguồn gốc.</p>
+        </section>
+
+        <div class="qr-details-container">
+            <div class="qr-details-header">
+                <div>
+                    <span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Chứng nhận định danh số</span>
+                    <h2 id="brand" style="font-size: 1.35rem; font-weight: 700; color: var(--text-main);">Đang tải thông tin...</h2>
+                </div>
+                <div class="no-print">
+                    <button onclick="window.print()" class="btn btn-secondary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 6 2 18 2 18 9"/>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                            <rect x="6" y="14" width="12" height="8"/>
+                        </svg>
+                        In Tem
+                    </button>
+                </div>
+            </div>
+
+            <div class="qr-details-body">
+                <div>
+                    <div class="data-row">
+                        <span class="data-label">Mẫu mã / Model</span>
+                        <span id="model" class="data-value">-</span>
+                    </div>
+
+                    <div class="data-row">
+                        <span class="data-label">Mô tả sản phẩm</span>
+                        <span id="description" class="data-value" style="font-size: 0.95rem; font-weight: 400; color: var(--text-muted);">-</span>
+                    </div>
+
+                    <div class="data-row">
+                        <span class="data-label">Nhà sản xuất</span>
+                        <span id="manufacturerName" class="data-value">-</span>
+                    </div>
+
+                    <div class="data-row">
+                        <span class="data-label">Địa điểm sản xuất</span>
+                        <span id="manufacturerLocation" class="data-value">-</span>
+                    </div>
+
+                    <div class="data-row">
+                        <span class="data-label">Mã băm Blockchain (Product Hash)</span>
+                        <div id="productCodeBox" class="data-code-box">Đang tải...</div>
+                    </div>
+                </div>
+
+                <div class="qr-code-wrapper">
+                    <div id="qrcode" style="width: 190px; height: 190px; display: flex; align-items: center; justify-content: center;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem; font-weight: 500;">Mã QR Chống Hàng Giả</span>
+                </div>
+            </div>
+
+            <div class="no-print" style="padding: 1.25rem 2rem; background: var(--bg-muted); border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="../createCodes.html" class="btn btn-secondary">&larr; Tạo thêm sản phẩm khác</a>
+                <a href="../index.html" class="btn btn-primary">Về trang chủ</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer no-print">
+        <div class="footer-content">
+            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
+            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        function loadCodeDetails(file) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4) {
+                    if (rawFile.status === 200 || rawFile.status == 0) {
+                        var allText = rawFile.responseText;
+                        var lines = allText.split('\n');
+                        
+                        var productCode = lines[0] ? lines[0].trim() : '';
+                        var brandName = lines[1] ? lines[1].trim() : 'N/A';
+                        var modelName = lines[2] ? lines[2].trim() : 'N/A';
+                        var descriptionText = lines[3] ? lines[3].trim() : 'N/A';
+                        var mName = lines[4] ? lines[4].trim() : 'N/A';
+                        var mLocation = lines[5] ? lines[5].trim() : 'N/A';
+
+                        // Render QR
+                        var qrContainer = document.getElementById("qrcode");
+                        qrContainer.innerHTML = "";
+                        new QRCode(qrContainer, {
+                            text: productCode,
+                            width: 180,
+                            height: 180,
+                            colorDark: "#0f172a",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+
+                        document.getElementById('brand').innerText = brandName;
+                        document.getElementById('model').innerText = modelName;
+                        document.getElementById('description').innerText = descriptionText;
+                        document.getElementById('manufacturerName').innerText = mName;
+                        document.getElementById('manufacturerLocation').innerText = mLocation;
+                        document.getElementById('productCodeBox').innerText = productCode;
+                    }
+                }
+            };
+            rawFile.send(null);
+        }
+        loadCodeDetails("code.txt");
+    </script>
 </body>
 </html>
