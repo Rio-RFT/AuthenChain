@@ -1,93 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuthenChain | Sổ cái Chuỗi Cung Ứng & Xác Thực Sản Phẩm</title>
-    <link rel="icon" href="Pics/logo.png">
-    <link rel="stylesheet" href="minimal.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#090912">
+    <title>Astryx — Product identity, verified</title>
+    <link rel="stylesheet" href="astryx.css">
 </head>
+
 <body>
-
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="brand-logo">
-                <span class="brand-badge">AC</span>
-                <span>AuthenChain</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link active">Trang chủ</a></li>
-                <li><a href="createCodes.html" class="nav-link">Nhà sản xuất</a></li>
-                <li><a href="createRetailer.html" class="nav-link">Đại lý bán lẻ</a></li>
-                <li><a href="verify.html" class="nav-link btn-link">Tra cứu / Xác thực</a></li>
-            </ul>
-        </div>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <header class="topbar"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a>
+        <nav><a class="nav-current" href="/">Tổng quan</a><a href="/createCodes">Nhà sản xuất</a><a
+                href="/createRetailer">Đối tác</a><a href="/test-qr">QR demo</a></nav><a class="nav-cta" href="/verify">Xác thực <span>↗</span></a>
     </header>
-
-    <!-- Main Content -->
-    <main class="main-wrapper">
-        <section class="page-header">
-            <div class="page-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-                Blockchain Ledger & Anti-Counterfeit
+    <main class="shell">
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="eyebrow"><span class="live-dot"></span> AUTHENTICITY INFRASTRUCTURE <span
+                        class="eyebrow-line"></span> 01 / 03</div>
+                <h1>Identity that<br><em>can’t be copied.</em></h1>
+                <p class="hero-lede">Mỗi sản phẩm mang một dấu vân tay số duy nhất. Theo dõi nguồn gốc, xác thực tức
+                    thì, trao quyền sở hữu minh bạch — trên một sổ cái không thể chỉnh sửa.</p>
+                <div class="hero-actions"><a class="button button-primary" href="/verify">Kiểm tra sản phẩm
+                        <span>↗</span></a><a class="text-link" href="/createCodes">Tạo định danh sản phẩm
+                        <span>→</span></a></div>
+                <div class="hero-foot">
+                    <div class="avatar-stack"><b>A</b><b>V</b><b>+</b></div><span>Được bảo vệ bằng
+                        Ethereum<br><strong>Hồ sơ xác thực bất biến</strong></span>
+                </div>
             </div>
-            <h1 class="page-title">Sổ Cái Chuỗi Cung Ứng & Xác Thực Chống Hàng Giả</h1>
-            <p class="page-subtitle">Nền tảng minh bạch hóa toàn bộ hành trình sản phẩm từ nhà máy đến người tiêu dùng, loại bỏ nguy cơ hàng giả bằng công nghệ sổ cái phân tán.</p>
+            <div class="hero-visual">
+                <div class="orbit orbit-a"></div>
+                <div class="orbit orbit-b"></div>
+                <div class="orbit orbit-c"></div>
+                <div class="orb-core">
+                    <div class="core-symbol">A<span>✳</span></div>
+                    <div class="core-caption">AUTHENTIC<br><strong>BY DESIGN</strong></div>
+                </div>
+                <div class="float-card card-hash"><span class="mini-icon">⌘</span>
+                    <div><small>PRODUCT FINGERPRINT</small><strong>0x8A2F ··· 91C4</strong></div><span
+                        class="checkmark">✓</span>
+                </div>
+                <div class="float-card card-chain"><span class="chain-icon">◈</span>
+                    <div><small>VERIFIED ON</small><strong>Ethereum · Block 19,204,811</strong></div>
+                </div>
+                <div class="visual-label">FIG. 01 <span>TRUST, MADE VISIBLE</span></div>
+            </div>
         </section>
-
-        <!-- Feature Cards -->
-        <div class="card-grid">
-            <!-- Manufacturer Card -->
-            <div class="minimal-card">
-                <div class="card-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                    </svg>
-                </div>
-                <h2 class="card-title">Cổng Nhà Sản Xuất</h2>
-                <p class="card-desc">Tạo định danh tài sản số trên Smart Contract, gán mã băm bảo mật và sinh tem QR định danh duy nhất cho từng sản phẩm xuất xưởng.</p>
-                <a href="createCodes.html" class="btn btn-primary">Tạo Mã QR Sản Phẩm &rarr;</a>
+        <section class="signal-row">
+            <div class="signal-label">THE ASTRYX STANDARD <span>—</span></div>
+            <div class="signal"><b>01</b><span>Unique<br>digital identity</span></div>
+            <div class="signal"><b>02</b><span>On-chain<br>verification</span></div>
+            <div class="signal"><b>03</b><span>Transparent<br>ownership</span></div>
+            <div class="signal-status"><span class="live-dot"></span> NETWORK OPERATIONAL</div>
+        </section>
+        <section class="section-heading">
+            <div>
+                <div class="eyebrow">BUILT FOR EVERY LINK</div>
+                <h2>One product.<br><em>Every proof.</em></h2>
             </div>
-
-            <!-- Retailer Card -->
-            <div class="minimal-card">
-                <div class="card-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                        <polyline points="9 22 9 12 15 12 15 22"/>
-                    </svg>
-                </div>
-                <h2 class="card-title">Cổng Đại Lý / Phân Phối</h2>
-                <p class="card-desc">Đăng ký định danh đại lý lên Blockchain, tiếp nhận lô hàng từ nhà sản xuất và xác nhận chuyển giao quyền sở hữu cho người mua.</p>
-                <a href="createRetailer.html" class="btn btn-secondary">Đăng Ký Đại Lý &rarr;</a>
-            </div>
-
-            <!-- Consumer Verification Card -->
-            <div class="minimal-card">
-                <div class="card-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </div>
-                <h2 class="card-title">Xác Thực & Quét Mã</h2>
-                <p class="card-desc">Cổng tra cứu công khai cho người tiêu dùng. Quét mã QR qua Camera để xác minh hàng chính hãng và kiểm tra toàn bộ lịch sử nguồn gốc.</p>
-                <a href="verify.html" class="btn btn-secondary">Kiểm Tra Ngay &rarr;</a>
-            </div>
-        </div>
+            <p>Từ nhà máy đến tay người sở hữu — mọi cột mốc đều được xác thực và ghi lại cùng Astryx.</p>
+        </section>
+        <section class="feature-grid"><a class="feature feature-violet" href="/createCodes">
+                <div class="feature-top"><span class="feature-number">01 / ORIGIN</span><span
+                        class="feature-arrow">↗</span></div>
+                <div class="feature-icon">✳</div>
+                <h3>Định danh<br>nguồn gốc</h3>
+                <p>Tạo dấu vân tay SHA-256 riêng cho từng sản phẩm và phát hành QR chống sao chép.</p><span
+                    class="feature-link">CỔNG NHÀ SẢN XUẤT <b>→</b></span>
+                <div class="feature-glow"></div>
+            </a><a class="feature feature-blue" href="/verify">
+                <div class="feature-top"><span class="feature-number">02 / PROOF</span><span
+                        class="feature-arrow">↗</span></div>
+                <div class="feature-icon">⌗</div>
+                <h3>Xác thực<br>tức thì</h3>
+                <p>Quét tem hoặc nhập mã để kiểm tra trạng thái trên blockchain và phát hiện bản sao.</p><span
+                    class="feature-link">MỞ TRÌNH XÁC THỰC <b>→</b></span>
+                <div class="feature-glow"></div>
+            </a><a class="feature feature-amber" href="/createRetailer">
+                <div class="feature-top"><span class="feature-number">03 / CUSTODY</span><span
+                        class="feature-arrow">↗</span></div>
+                <div class="feature-icon">◉</div>
+                <h3>Chuyển giao<br>minh bạch</h3>
+                <p>Hai bên xác nhận trong phiên bảo mật có thời hạn để chuyển quyền sở hữu.</p><span
+                    class="feature-link">DÀNH CHO ĐỐI TÁC <b>→</b></span>
+                <div class="feature-glow"></div>
+            </a></section>
+        <section class="bottom-banner">
+            <div>
+                <div class="eyebrow">A BETTER KIND OF CERTAINTY</div>
+                <h2>Know what you own.</h2>
+            </div><a class="button button-light" href="/verify">Xác thực sản phẩm <span>↗</span></a>
+            <div class="banner-orb"></div>
+        </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
-            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
-        </div>
-    </footer>
-
+    <footer class="footer"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a><span>PRODUCT IDENTITY PROTOCOL · BUILT ON
+            ETHEREUM</span><span>© 2026 ASTRYX LABS</span></footer>
 </body>
+
 </html>

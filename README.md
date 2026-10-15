@@ -1,190 +1,65 @@
-<div align="center">
+# AuthentiFi · Astryx
 
-  ![AuthentiFi](https://imgur.com/1xXwOoZ.png)
+Hệ thống định danh sản phẩm và xác thực chống hàng giả. Astryx UI là giao diện mới cho cổng nhà sản xuất, người mua và luồng bàn giao quyền sở hữu.
 
-  [![Hackathon](https://img.shields.io/badge/hackathon-SPIT-orange.svg)](http://csi.spit.ac.in/hackathon/) 
-  [![Status](https://img.shields.io/badge/status-inactive-red.svg)]() 
-  [![GitHub Issues](https://img.shields.io/github/issues/kylelobo/AuthentiFi.svg)](https://github.com/kylelobo/AuthentiFi/issues)
-  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/AuthentiFi.svg)](https://github.com/kylelobo/AuthentiFi/pulls)
-  [![License](https://img.shields.io/badge/license-GNU-blue.svg)](LICENSE.md)
+## Kiến trúc
 
-</div>
+- **Ethereum / Ganache:** lưu SHA-256 `bytes32`, trạng thái kích hoạt, bộ đếm quét, thời gian kích hoạt và ví sở hữu.
+- **MySQL:** lưu metadata off-chain trong `PRODUCTS`, lịch sử chủ sở hữu trong `OWNERSHIP_LOGS`, và `SCAN_LOGS` gồm mã sản phẩm, thời gian, IP, vị trí cùng cờ bất thường.
+- **Express:** phát hành mã, xác thực QR, ghi scan log và điều phối handshake bàn giao.
+- **Astryx:** trang tổng quan, cổng phát hành, cổng quét camera và bàn giao hai bên.
 
----
+## Chạy local
 
-<p align="center">A blockchain-based Product Ownership Management System for anti-counterfeits in the Post Supply Chain.</p>
+1. Cài dependencies bằng `npm install` và tạo file `.env` dựa trên `.env.example`.
+2. Khởi chạy Ganache tại `http://127.0.0.1:7545` với tài khoản có ETH.
+3. Tạo database và bảng nhật ký: `mysql -u root -p < database/scan_logs.sql`.
+4. Biên dịch và deploy hợp đồng:
 
-# Table of Contents
-+ [About](#description)
-+ [Getting Started](#getting_started)
-+ [Deployment](#deployment)
-+ [Limitations](#limitations)
-+ [Future Scope](#future_scope)
-+ [Contributing](#contributing)
-+ [Authors](#authors)
-+ [Acknowledgements](#acknowledgements)
+   ```sh
+   npm run compile
+   npm run deploy
+   ```
 
-## About <a name="description"></a>
-+ In today’s world, how do you know if you are buying a genuine product?
-+ For more than a decade now, RFID (Radio Frequency IDentification) technology has been quite effective in providing anti-counterfeits measures in the supply chain.
-+ We leverage the idea of Bitcoin’s blockchain that anyone can check the proof of possession of balance. Along with this, we plan to use QR codes.
-+ We plan to implement a proof-of-concept system employing a blockchain-based decentralized application which gives a customer the entire history of a product (eg - brand info, owner, etc).
+   Deploy ghi địa chỉ vào `contract-address.json` (file local, không commit). Có thể dùng `CONTRACT_ADDRESS` trong `.env` để ghi đè.
 
-### Data Flow
-![Data Flow](https://imgur.com/VGIPtDU.png)
+5. Chạy `npm start`, mở `http://localhost:8080`.
 
-### Why blockchain? <a name="why_blockchain"></a>
-+ Unlike a normal database, Blockchain has a non-destructive (immutable) way to track data changes over time. This means that data is not editable rather, whenever updates are made, a new block is added to the “block-chain”. This helps track historical data (authenticity and owner data) of a product.
-+ Given the amount of data to be dealt with (large amount of products being developed), if you have to keep track of all of them, it is better to have a decentralized and distributed network of nodes so that no entity can tamper with the product data and we also obtain 100% up time.
-+ Transparent nature of the Blockchain helps avoid [parallel trade](https://en.wikipedia.org/wiki/Parallel_import).
-+ Using Blockchain, authenticity can be checked and ownership of a product can be transferred _decades_ from now; even if the product is discontinued.
+### Nạp tư liệu sản phẩm demo
 
-## Getting Started <a name="getting_started"></a>
-> 📖 **Quick Installation Guide:** For a detailed, step-by-step setup guide (including Ganache installation, smart contract deployment, and database setup), please refer to **[INSTALL.md](INSTALL.md)**.
+Sau khi tạo database bằng schema ở trên, chạy `npm run seed:demo` để upsert 100 sản phẩm thuộc 12 thương hiệu. Seeder sinh hash, serial, batch, UID, salt và thời gian cố định để có thể chạy lặp lại mà không nhân bản dữ liệu. Để chọn số lượng khác, chạy `node scripts/seed-demo-products.js --count=500` (tối đa 10.000).
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Xem trước dữ liệu mà không cần kết nối service: `node scripts/seed-demo-products.js --count=100 --preview`.
 
-### Prerequisites
-What things you need to install the software and how to install them
-Installing NodeJs
-```
-$ sudo apt-get install nodejs
-```
-Installing [Android Studio](https://developer.android.com/studio/)
+Mặc định seeder yêu cầu Ganache đang chạy và hợp đồng đã deploy; mỗi hash được tạo và kích hoạt trên chain để dùng được qua `/api/verify`. Dùng `node scripts/seed-demo-products.js --database-only` nếu chỉ muốn nạp dữ liệu MySQL để thử truy vấn. Các mã ở chế độ này chưa xác thực được qua API cho đến khi được đăng ký on-chain.
 
+Camera cần quyền truy cập và HTTPS hoặc localhost. Nếu camera không khả dụng, cổng xác thực vẫn nhận mã dán thủ công. MySQL không bắt buộc để server khởi động; khi chưa kết nối, scan log tạm giữ trong bộ nhớ và mất khi tiến trình dừng.
 
-### Installing
-A step by step series of examples that tell you how to get a development env running
+## Luồng sản phẩm
 
-Cloning the repo
-```
-$ git clone https://github.com/kylelobo/AuthentiFi.git
-```
-Installing the dependencies
-```
-$ cd AuthentiFi
-$ npm install
-```
-Running the server
-```
-$ node server.js
-```
+1. Nhà sản xuất nhập thương hiệu, model, serial và dữ liệu lô. Server sinh salt ngẫu nhiên 128-bit, timestamp ISO và hash SHA-256, sau đó tạo bản ghi trên chain.
+2. Nhà sản xuất kích hoạt sản phẩm. QR chỉ chứa URL xác thực cùng hash.
+3. `/api/verify` kiểm tra hash và trạng thái kích hoạt, tăng `scanCount` on-chain, ghi IP/vị trí vào `SCAN_LOGS`. Lần đầu là thẻ xanh; lần quét tiếp theo hoặc mã không tồn tại là thẻ đỏ.
+4. `/api/ownership/handshake` tạo session tối đa 600 giây. Seller và buyer có mã xác nhận riêng; chỉ khi cả hai xác nhận trong hạn mới gọi `changeOwner`.
 
-## Deployment <a name="deployment"></a>
-**1. Instantiate your data directory**
-```
-geth --datadir ./myDataDir init ./myGenesis.json
-```
+## API
 
-**2. Start your Ethereum peer node.**
+- `POST /QRCodeForManufacturer` — JSON: `brand`, `model`, `serial`, `batch`, `uid`, `description`, `manufacturerName`, `manufacturerLocation`.
+- `POST /api/products/:hash/activate` — kích hoạt sản phẩm đã phát hành.
+- `POST /api/verify` — JSON: `codeHash` (hoặc `code`) và tùy chọn `location: { latitude, longitude }`.
+- `POST /api/ownership/handshake` — JSON: `codeHash`, `newOwner`, tùy chọn `ttlSeconds` (giới hạn 600).
+- `POST /api/ownership/handshake/:token/confirm` — JSON: `party: "seller" | "buyer"`, `participantToken` tương ứng.
+- `GET /health` — tình trạng kết nối chain/MySQL.
 
-+ Networkid helps ensure the privacy of your network. You can use any number here (where we used “1114”), but other peers joining your network must use the same one.
-```
-geth --datadir ./myDataDir --networkid 1114 console 2>> myEth.log
-```
-+ Output should look like this:
-```
-Welcome to the Geth JavaScript console!
+Metadata chi tiết và salt được giữ off-chain; blockchain chỉ lưu hash đại diện cùng trạng thái, scan count và ví sở hữu. Session handshake hiện tồn tại trong bộ nhớ tiến trình.
 
-instance: Geth/v1.7.3-stable-4bb3c89d/darwin-amd64/go1.8.3
-coinbase: 0xae13d41d66af28380c7af6d825ab557eb271ffff
-at block: 5 (Thu, 07 Dec 2017 17:08:48 PST)
-datadir: /Users/test/my-eth-chain/myDataDir
-modules: admin:1.0 clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+## Kịch bản nghiệm thu
 
->
-```
-This is the geth JavaScript console. Any command with the symbol > should be typed here.
+Với Ganache, MySQL và server đang chạy:
 
-**3. Display your Ethereum logs**
-
-+ Open another terminal window
-+ ```cd my-eth-chain```
-+ Type ```tail -f myEth.log```
-
-**4. Import/Create an Account**
-
-+ If you allocated ETH in the Genesis file, import the corresponding account by dragging the UTC file into the ```myDataDir/keystoredirectory``` and skip to step 5.
-+ In the geth JavaScript console, create an account:
-```
-> personal.newAccount("<YOUR_PASSPHRASE>")
-```
-+ Do not forget this passphrase! You will be typing this a lot, so for this test network you can keep it simple.
-
-**5. Set Default Account**
-+ Check your default account, type
-```
-> eth.coinbase
-```
-+ If this address is the same as the one from step 4, skip the rest of step 5.
-+ To set your default account, type 
-```
-> miner.setEtherbase(web3.eth.accounts[0])
-```
-
-**6. Start mining**
-+ Check your balance with 
-```
-> eth.getBalance(eth.coinbase)
-```
-+ Run 
-```
-> miner.start()
-```
-+ Look at your other terminal window, you should see some mining action in the logs. Check your balance again and it should be higher.
-+ To end mining, type
-```
-> miner.stop()
-```
-
-## Built With <a name="built_with"></a>
-Mobile App:
-+ [Android Studio](https://developer.android.com/studio/) - Android app
-+ [NodeJs](https://nodejs.org/en/) - Server Environment
-+ [MySQL](https://dev.mysql.com/downloads/os-linux.html) - Database
-
-Blockchain:
-+ [Ethereum](https://www.ethereum.org/) - Blockchain Network
-+ [Solidity](https://github.com/ethereum/solidity) - Smart Contracts
-+ [Ganache](https://truffleframework.com/ganache) - Create private Ethereum blockchain to run tests
-
-Website:
-+ HTML - Markup language for creating web pages
-+ CSS - Style Sheet Language
-+ JavaScript - Scripting Language for web pages
-+ Bootstrap - Templating
-
-## Limitations <a name="limitations"></a>
-+ The user needs to have a QR code scanner in order to check the product information.
-+ Products that have already been manufactured prior to today cannot be tracked.
-+ We currently depend on the company to register with our services, without which, we cannot provide information about a brand to the user.
-
-## Future Scope <a name="future_scope"></a>
-+ To track every genuine product that is to be sold.
-+ Implement this idea in other fields.
-+ Virtual transactions
-+ Using tamper-proof tags
-+ Dynamic (read & write NFC tags)
-+ QR codes which have secure graphic
-+ Implement our own tokens which can be sold to users so that they can purchase ownership of a product using tokens which helps in insurance processing. 
-
-## Contributing <a name="contributing"></a>
-> **Academic Note:** This repository is used and developed strictly for **educational, academic coursework, and non-commercial research purposes**. For complete licensing terms, attribution of original authors, and contribution workflows, please review [CONTRIBUTING.md](CONTRIBUTING.md).
-
-1. Fork it (<https://github.com/kylelobo/AuthentiFi/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
-
-
-## Authors <a name="authors"></a>
-+ [Calden Rodrigues](https://github.com/caldenrodrigues) <br>
-+ [JohnAnand Abraham](https://github.com/johnanand) <br>
-+ [Kyle Lobo](https://github.com/kylelobo) <br>
-+ [Pratik Nerurkar](https://github.com/PlayPratz) <br>
-
-See also the list of [contributors](https://github.com/kylelobo/AuthentiFi/contributors) who participated in this project.
-
-## Acknowledgements <a name="acknowledgements"></a>
-[How To: Create Your Own Private Ethereum Blockchain](https://medium.com/mercuryprotocol/how-to-create-your-own-private-ethereum-blockchain-dad6af82fc9f) - _Mercury Protocol_
+1. Tạo sản phẩm từ cổng nhà sản xuất; response phải có hash 64 ký tự hex và giao dịch đăng ký thành công.
+2. Kích hoạt sản phẩm; đọc `getCode(hash)` xác nhận `isVerified = true`.
+3. Xác thực lần đầu; API trả `card: "green"`, `scanCount: 1`; kiểm tra có một dòng `SCAN_LOGS`.
+4. Quét lại hash; API trả `card: "red"`, `scanCount > 1`, `anomaly_flag = 1`.
+5. Xác thực hash hợp lệ định dạng nhưng không có trên chain; API trả `valid: false`, `card: "red"`, HTTP 404.
+6. Tạo handshake; hết 600 giây rồi xác nhận; API trả HTTP 410 và owner cũ không đổi. Xác nhận cả hai bên trước hạn thì owner mới được ghi lên chain.

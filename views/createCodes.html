@@ -1,88 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo Mã QR Sản Phẩm | AuthenChain</title>
-    <link rel="icon" href="Pics/logo.png">
-    <link rel="stylesheet" href="minimal.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Issue product identity — Astryx</title>
+    <link rel="stylesheet" href="astryx.css">
 </head>
+
 <body>
-
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="brand-logo">
-                <span class="brand-badge">AC</span>
-                <span>AuthenChain</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
-                <li><a href="createCodes.html" class="nav-link active">Nhà sản xuất</a></li>
-                <li><a href="createRetailer.html" class="nav-link">Đại lý bán lẻ</a></li>
-                <li><a href="verify.html" class="nav-link btn-link">Tra cứu / Xác thực</a></li>
-            </ul>
-        </div>
+    <header class="topbar"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a>
+        <nav><a href="/">Tổng quan</a><a class="nav-current" href="/createCodes">Nhà sản xuất</a><a
+                href="/createRetailer">Đối tác</a></nav><a class="nav-cta" href="/verify">Xác thực <span>↗</span></a>
     </header>
-
-    <!-- Main Content -->
-    <main class="main-wrapper">
-        <section class="page-header">
-            <div class="page-tag">Nhà Sản Xuất (Manufacturer)</div>
-            <h1 class="page-title">Khởi Tạo & Đăng Ký Sản Phẩm</h1>
-            <p class="page-subtitle">Nhập thông tin sản phẩm để tạo mã băm mật mã và ghi nhận vào sổ cái Blockchain, sau đó hệ thống sẽ tự động tạo tem QR định danh.</p>
+    <main class="shell inner-shell">
+        <div class="eyebrow"><span class="live-dot"></span> MANUFACTURER CONSOLE</div>
+        <section class="inner-hero">
+            <div>
+                <h1>Give every product<br><em>its own identity.</em></h1>
+                <p>Phát hành mã định danh mật mã duy nhất, ghi nhận lên blockchain và tạo tem QR xác thực.</p>
+            </div>
+            <div class="inner-index">B / 01<br><span>PRODUCT ISSUANCE</span></div>
         </section>
-
-        <div class="form-container">
-            <form name="createCodeForm" action="/QRCodeForManufacturer" method="POST">
-                <div class="form-group">
-                    <label for="brand" class="form-label">Tên Thương Hiệu (Brand Name)</label>
-                    <input type="text" id="brand" name="brand" class="form-input" placeholder="Ví dụ: Nike, Apple, Sony..." required>
+        <div class="create-layout">
+            <section class="panel form-panel">
+                <div class="panel-heading">
+                    <div><span class="panel-kicker">01 — PRODUCT DATA</span>
+                        <h2>Thông tin sản phẩm</h2>
+                    </div><span class="panel-symbol">✳</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="model" class="form-label">Dòng / Mẫu Mã (Model / SKU)</label>
-                    <input type="text" id="model" name="model" class="form-input" placeholder="Ví dụ: Air Jordan 1, iPhone 15 Pro..." required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description" class="form-label">Mô Tả Sản Phẩm (Description)</label>
-                    <textarea id="description" name="description" class="form-textarea" placeholder="Thông số kỹ thuật, số serial, mô tả chi tiết sản phẩm..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="manufacturerName" class="form-label">Tên Đơn Vị Sản Xuất (Manufacturer Name)</label>
-                    <input type="text" id="manufacturerName" name="manufacturerName" class="form-input" placeholder="Ví dụ: Foxconn Global, Nhà máy A..." required>
-                </div>
-
-                <div class="form-group">
-                    <label for="manufacturerLocation" class="form-label">Địa Điểm Sản Xuất (Location)</label>
-                    <input type="text" id="manufacturerLocation" name="manufacturerLocation" class="form-input" placeholder="Ví dụ: Bình Dương, Việt Nam" required>
-                    <div class="form-helper">Dữ liệu vị trí và thời gian sẽ được đóng gói bất biến vào khối dữ liệu sản phẩm.</div>
-                </div>
-
-                <div style="margin-top: 1.75rem;">
-                    <button type="submit" class="btn btn-primary btn-block">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="7"/>
-                            <rect x="14" y="3" width="7" height="7"/>
-                            <rect x="14" y="14" width="7" height="7"/>
-                            <rect x="3" y="14" width="7" height="7"/>
-                        </svg>
-                        Ghi Lên Blockchain & Sinh Mã QR
-                    </button>
-                </div>
-            </form>
+                <form id="createForm">
+                    <div class="form-grid">
+                        <div class="field"><label for="brand">Thương hiệu <b>*</b></label><input id="brand" name="brand"
+                                placeholder="Ví dụ: Astryx Studio" required></div>
+                        <div class="field"><label for="model">Dòng sản phẩm / Model <b>*</b></label><input id="model"
+                                name="model" placeholder="Tên mẫu hoặc SKU" required></div>
+                        <div class="field"><label for="serial">Serial ID</label><input id="serial" name="serial"
+                                placeholder="Số serial duy nhất"></div>
+                        <div class="field"><label for="batch">Mã lô hàng</label><input id="batch" name="batch"
+                                placeholder="Batch / Lot number"></div>
+                        <div class="field"><label for="uid">UID nội bộ</label><input id="uid" name="uid"
+                                placeholder="Định danh nội bộ (tùy chọn)"></div>
+                        <div class="field"><label for="manufacturerName">Nhà sản xuất <b>*</b></label><input
+                                id="manufacturerName" name="manufacturerName" placeholder="Tên doanh nghiệp" required>
+                        </div>
+                        <div class="field field-wide"><label for="manufacturerLocation">Địa điểm sản xuất
+                                <b>*</b></label><input id="manufacturerLocation" name="manufacturerLocation"
+                                placeholder="Tỉnh/thành phố, quốc gia" required></div>
+                        <div class="field field-wide"><label for="description">Mô tả sản phẩm</label><textarea
+                                id="description" name="description" rows="3"
+                                placeholder="Thông tin giúp người mua nhận diện sản phẩm"></textarea></div>
+                    </div>
+                    <div class="privacy-note"><span>◇</span>
+                        <p>Salt 128-bit được sinh ngẫu nhiên. Dấu vân tay SHA-256 kết hợp thương hiệu, model, serial,
+                            batch, UID, timestamp và salt.</p>
+                    </div><button class="button button-primary button-wide" id="createButton">Ghi định danh lên
+                        blockchain <span>→</span></button>
+                    <div id="createError" class="inline-message" hidden></div>
+                </form>
+            </section>
+            <aside class="panel issue-aside"><span class="panel-kicker">ISSUANCE FLOW</span>
+                <div class="issuance-step"><b>01</b><span><strong>Generate fingerprint</strong><small>SHA-256 · entropy
+                            128-bit</small></span></div>
+                <div class="issuance-step"><b>02</b><span><strong>Register on-chain</strong><small>Ethereum · immutable
+                            record</small></span></div>
+                <div class="issuance-step"><b>03</b><span><strong>Activate & print</strong><small>QR code · ready for
+                            packaging</small></span></div>
+                <div class="aside-callout"><span class="live-dot"></span> Ganache private network</div>
+            </aside>
         </div>
+        <section class="panel issued-result" id="issuedResult" hidden>
+            <div class="result-top">
+                <div><span class="result-badge">● IDENTITY CREATED</span>
+                    <h2>Định danh đã được ghi nhận</h2>
+                    <p id="issuedMessage">Kích hoạt sản phẩm để phát hành QR tem.</p>
+                </div>
+                <div id="qrCode" class="qr-frame"></div>
+            </div>
+            <div class="result-meta">
+                <div><small>PRODUCT FINGERPRINT</small><code id="issuedHash"></code></div>
+                <div><small>ISSUED AT</small><strong id="issuedTime"></strong></div>
+                <div><small>STATUS</small><strong id="issuedStatus">Awaiting activation</strong></div>
+            </div>
+            <div class="issued-actions"><button id="activateButton" class="button button-primary">Kích hoạt sản phẩm
+                    <span>→</span></button><a id="verifyLink" class="button button-secondary" target="_blank"
+                    rel="noreferrer">Mở trang xác thực ↗</a><a id="downloadQr" class="text-link"
+                    download="astryx-product-qr.png">Tải tem QR ↓</a></div>
+        </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
-            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
-        </div>
-    </footer>
-
+    <footer class="footer"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a><span>PRODUCT IDENTITY PROTOCOL · BUILT ON
+            ETHEREUM</span><span>© 2026 ASTRYX LABS</span></footer>
+    <script>
+        let product = null; const form = document.getElementById('createForm'), errorBox = document.getElementById('createError'); form.addEventListener('submit', async e => { e.preventDefault(); const btn = document.getElementById('createButton'); btn.disabled = true; btn.textContent = 'Đang ghi nhận…'; errorBox.hidden = true; try { const data = Object.fromEntries(new FormData(form)); const res = await fetch('/QRCodeForManufacturer', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); const out = await res.json(); if (!res.ok) throw new Error(out.error); product = out; document.getElementById('issuedResult').hidden = false; document.getElementById('issuedHash').textContent = out.codeHash; document.getElementById('issuedTime').textContent = new Date(out.timestamp).toLocaleString('vi-VN'); document.getElementById('verifyLink').href = out.verifyUrl; const qrUrl = '/api/qr?code=' + encodeURIComponent(out.productCode); const image = new Image(); image.width = 168; image.height = 168; image.alt = 'QR sản phẩm ' + out.productCode; image.src = qrUrl; image.onerror = () => { errorBox.textContent = 'Không tạo được ảnh QR. Hãy tải lại trang.'; errorBox.hidden = false }; document.getElementById('qrCode').replaceChildren(image); document.getElementById('downloadQr').href = qrUrl; document.getElementById('issuedResult').scrollIntoView({ behavior: 'smooth' }); } catch (err) { errorBox.textContent = err.message; errorBox.hidden = false } finally { btn.disabled = false; btn.innerHTML = 'Ghi định danh lên blockchain <span>→</span>' } });
+        document.getElementById('activateButton').addEventListener('click', async e => { if (!product) return; const btn = e.currentTarget; btn.disabled = true; btn.textContent = 'Đang kích hoạt…'; try { const res = await fetch('/api/products/' + encodeURIComponent(product.codeHash) + '/activate', { method: 'POST' }); const data = await res.json(); if (!res.ok) throw new Error(data.error); document.getElementById('issuedStatus').textContent = 'Active · On-chain'; document.getElementById('issuedMessage').textContent = 'Sản phẩm đã kích hoạt. Tem QR sẵn sàng để in.'; btn.textContent = '✓ Đã kích hoạt'; btn.classList.add('button-success'); } catch (err) { errorBox.textContent = err.message; errorBox.hidden = false; btn.disabled = false; btn.innerHTML = 'Kích hoạt sản phẩm <span>→</span>' } });
+    </script>
 </body>
+
 </html>

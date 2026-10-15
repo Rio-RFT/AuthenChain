@@ -1,12 +1,13 @@
+require('dotenv').config();
 const Web3 = require('web3');
 const fs = require('fs');
 const path = require('path');
 
 // 1. Kết nối với Ganache (cổng 7545)
-const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC_URL || 'http://127.0.0.1:7545'));
 
 function deploy() {
-    console.log('Đang kiểm tra kết nối với Ganache (http://127.0.0.1:7545)...');
+    console.log(`Đang kiểm tra kết nối Ganache (${process.env.BLOCKCHAIN_RPC_URL || 'http://127.0.0.1:7545'})...`);
     
     web3.eth.getAccounts((err, accounts) => {
         if (err || !accounts || accounts.length === 0) {
@@ -72,17 +73,9 @@ function deploy() {
                         console.log(`Gas đã dùng: ${receipt.gasUsed}`);
                         console.log(`======================================================\n`);
 
-                        // 3. Tự động cập nhật dòng 'const address = ...' trong server.js
-                        const serverJsPath = path.join(__dirname, 'server.js');
-                        let serverContent = fs.readFileSync(serverJsPath, 'utf8');
-                        
-                        const updatedContent = serverContent.replace(
-                            /const address = '.*?';/,
-                            `const address = '${deployedAddress}';`
-                        );
-
-                        fs.writeFileSync(serverJsPath, updatedContent, 'utf8');
-                        console.log(`[OK] Đã tự động điền địa chỉ vào dòng 418 của server.js!`);
+                        // Keep deployment configuration separate from application source.
+                        fs.writeFileSync(path.join(__dirname, 'contract-address.json'), JSON.stringify({ address: deployedAddress, network: 'ganache' }, null, 2) + '\n', 'utf8');
+                        console.log(`[OK] Đã lưu địa chỉ hợp đồng vào contract-address.json`);
                         console.log(`[OK] Bây giờ bạn có thể khởi động server bằng lệnh:\n     node server.js\n`);
                         process.exit(0);
                     }

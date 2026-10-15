@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Kết quả xác thực — Astryx</title>
+    <link rel="stylesheet" href="astryx.css">
+</head>
+<body>
+    <header class="topbar"><a class="wordmark" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span class="wordmark-dot">.</span></span></a><nav><a href="/">Tổng quan</a><a href="/createCodes">Nhà sản xuất</a><a href="/createRetailer">Đối tác</a></nav><a class="nav-cta" href="/verify">Quét mã khác <span>↗</span></a></header>
+    <main class="shell inner-shell">
+        <div class="eyebrow"><span class="live-dot"></span> PUBLIC VERIFICATION PORTAL</div>
+        <section class="inner-hero"><div><h1>Verification<br><em>report.</em></h1><p>Kết quả đối chiếu mã sản phẩm với sổ cái blockchain.</p></div><div class="inner-index">A / 02<br><span>AUTHENTICITY CHECK</span></div></section>
+        <section id="resultBox" class="result-card" hidden>
+            <div class="result-stripe"></div><div class="result-content">
+                <div class="result-top"><div><span id="resultBadge" class="result-badge"></span><h2 id="resultTitle"></h2><p id="resultMessage"></p></div><span class="result-stamp" id="resultStamp"></span></div>
+                <div class="result-meta"><div><small>PRODUCT FINGERPRINT</small><code id="resultHash"></code></div><div><small>SCAN COUNT</small><strong id="scanCount"></strong></div><div><small>ACTIVATED</small><strong id="activatedAt"></strong></div></div>
+                <div id="historyWrap" class="history-wrap" hidden><h3>Hoạt động quét trước đó</h3><div id="historyList"></div></div>
+                <div id="provenance" class="timeline"></div>
+            </div>
+        </section>
+        <div id="resultError" class="inline-message" role="alert" hidden></div>
+        <div class="button-row" style="justify-content:center;margin-top:24px"><a class="button button-primary" href="/verify">Quét sản phẩm khác <span>→</span></a></div>
+    </main>
+    <footer class="footer"><a class="wordmark" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span class="wordmark-dot">.</span></span></a><span>PRODUCT IDENTITY PROTOCOL · BUILT ON ETHEREUM</span><span>© 2026 ASTRYX LABS</span></footer>
+    <script>
+        const result = document.getElementById('resultBox');
+        function showResult(d, hash) {
+            const good = d.card === 'green', product = d.product || {};
+            result.hidden = false; result.className = 'result-card ' + (good ? 'is-good' : 'is-alert');
+            document.getElementById('resultBadge').textContent = good ? '● THẺ XANH · AUTHENTIC' : '● THẺ ĐỎ · CẢNH BÁO';
+            document.getElementById('resultTitle').textContent = good ? [product.brand, product.model].filter(Boolean).join(' · ') || 'Hàng chính hãng' : 'Cần kiểm tra sản phẩm';
+            document.getElementById('resultMessage').textContent = d.message || d.error || '';
+            document.getElementById('resultHash').textContent = hash;
+            document.getElementById('scanCount').textContent = d.scanCount === undefined ? '—' : d.scanCount + ' lượt';
+            document.getElementById('activatedAt').textContent = d.activatedAt ? new Date(d.activatedAt * 1000).toLocaleString('vi-VN') : '—';
+            document.getElementById('resultStamp').textContent = good ? '✓' : '!';
+            const timeline = document.getElementById('provenance'), records = d.provenance || []; timeline.replaceChildren();
+            function step(title, detail, tag) { const row = document.createElement('div'), dot = document.createElement('i'), body = document.createElement('div'), name = document.createElement('b'), meta = document.createElement('span'), label = document.createElement('small'); row.className = 'timeline-item'; name.textContent = title; meta.textContent = detail; label.textContent = tag; body.append(name, meta); row.append(dot, body, label); timeline.append(row) }
+            step('Nhà sản xuất', [product.manufacturerName, product.manufacturerLocation, product.issuedAt ? new Date(product.issuedAt).toLocaleString('vi-VN') : null].filter(Boolean).join(' · ') || 'Định danh trên blockchain', 'ORIGIN');
+            records.slice(1).forEach((r, i) => step(i === records.length - 2 ? 'Người sở hữu hiện tại' : 'Chuyển giao quyền sở hữu', [r.ownerAddress, r.transferTime ? new Date(r.transferTime).toLocaleString('vi-VN') : null].filter(Boolean).join(' · '), i === records.length - 2 ? 'OWNER' : 'CUSTODY'));
+            if (records.length < 2) step('Người sở hữu hiện tại', String(d.currentOwner || 'Ví nhà sản xuất'), 'OWNER');
+            const wrap = document.getElementById('historyWrap'), list = document.getElementById('historyList'); list.replaceChildren();
+            if (d.previousScans && d.previousScans.length) { wrap.hidden = false; d.previousScans.forEach(x => { const row = document.createElement('div'); row.className = 'history-row'; row.textContent = [x.scanTime ? new Date(x.scanTime).toLocaleString('vi-VN') : 'Lượt quét trước', x.location || 'Không có vị trí', x.ipAddress || ''].filter(Boolean).join(' · '); list.append(row) }) } else wrap.hidden = true;
+        }
+        try { const saved = JSON.parse(sessionStorage.getItem('astryx:lastVerification') || 'null'); if (!saved || !saved.data) throw new Error('Không tìm thấy kết quả xác thực gần đây. Hãy quét mã sản phẩm để xem báo cáo.'); showResult(saved.data, saved.codeHash) }
+        catch (error) { const box = document.getElementById('resultError'); box.textContent = error.message; box.hidden = false }
+    </script>
+</body>
+</html>

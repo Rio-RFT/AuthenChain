@@ -1,99 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Ký Đại Lý | AuthenChain</title>
-    <link rel="icon" href="Pics/logo.png">
-    <link rel="stylesheet" href="minimal.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ownership transfer — Astryx</title>
+    <link rel="stylesheet" href="astryx.css">
 </head>
+
 <body>
-
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="brand-logo">
-                <span class="brand-badge">AC</span>
-                <span>AuthenChain</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
-                <li><a href="createCodes.html" class="nav-link">Nhà sản xuất</a></li>
-                <li><a href="createRetailer.html" class="nav-link active">Đại lý bán lẻ</a></li>
-                <li><a href="verify.html" class="nav-link btn-link">Tra cứu / Xác thực</a></li>
-            </ul>
-        </div>
+    <header class="topbar"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a>
+        <nav><a href="/">Tổng quan</a><a href="/createCodes">Nhà sản xuất</a><a class="nav-current"
+                href="/createRetailer">Đối tác</a></nav><a class="nav-cta" href="/verify">Xác thực <span>↗</span></a>
     </header>
-
-    <!-- Main Content -->
-    <main class="main-wrapper">
-        <section class="page-header">
-            <div class="page-tag">Đại Lý Bán Lẻ (Retailer)</div>
-            <h1 class="page-title">Đăng Ký Thông Tin Đại Lý</h1>
-            <p class="page-subtitle">Khởi tạo hồ sơ đại lý phân phối chính thức trên hệ thống sổ cái để được cấp quyền tiếp nhận và phân phối sản phẩm từ nhà sản xuất.</p>
+    <main class="shell inner-shell">
+        <div class="eyebrow"><span class="live-dot"></span> OWNERSHIP PROTOCOL</div>
+        <section class="inner-hero">
+            <div>
+                <h1>Transfer with<br><em>both eyes open.</em></h1>
+                <p>Mỗi lần chuyển giao cần xác nhận của cả người bán và người nhận trước khi quyền sở hữu đổi trên
+                    blockchain.</p>
+            </div>
+            <div class="inner-index">C / 03<br><span>2-WAY HANDSHAKE</span></div>
         </section>
-
-        <div class="form-container">
-            <form name="retailerForm" action="/retailerSignup" method="POST" onsubmit="return validatePassword()">
-                <div class="form-group">
-                    <label for="name" class="form-label">Tên Đại Lý / Doanh Nghiệp (Retailer Name)</label>
-                    <input type="text" id="name" name="name" class="form-input" placeholder="Ví dụ: Đại lý FPT Shop, CellphoneS..." required>
+        <div class="create-layout">
+            <section class="panel form-panel">
+                <div class="panel-heading">
+                    <div><span class="panel-kicker">01 — START TRANSFER</span>
+                        <h2>Tạo phiên bàn giao</h2>
+                    </div><span class="panel-symbol">⇄</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="email" class="form-label">Địa Chỉ Email (E-Mail Address)</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="contact@retailer.com" required>
-                    <div class="form-helper">Email sẽ được băm định danh (MD5 Hash) khi lưu trên Smart Contract.</div>
+                <form id="startForm">
+                    <div class="field"><label for="transferHash">Mã định danh sản phẩm <b>*</b></label><input
+                            id="transferHash" placeholder="0x… hoặc SHA-256 hash" required></div>
+                    <div class="field"><label for="newOwner">Địa chỉ ví người nhận <b>*</b></label><input id="newOwner"
+                            placeholder="0x… Ethereum address" required></div>
+                    <div class="privacy-note"><span>◷</span>
+                        <p>Phiên có hiệu lực tối đa 600 giây. Phiên hết hạn sẽ bị hủy, quyền sở hữu hiện tại không đổi.
+                        </p>
+                    </div><button class="button button-primary button-wide" id="startButton">Tạo phiên xác nhận
+                        <span>→</span></button>
+                </form>
+                <div id="startError" class="inline-message" hidden></div>
+                <div id="sessionPanel" class="session-panel" hidden><span class="result-badge">● SESSION ACTIVE</span>
+                    <h3>Chờ hai bên xác nhận</h3>
+                    <p>Chia sẻ mã phiên và mã xác nhận riêng cho từng bên.</p><label>SESSION TOKEN</label>
+                    <div class="token-row"><code id="sessionToken"></code><button id="copyToken"
+                            type="button">Copy</button></div><label>MÃ RIÊNG NGƯỜI BÁN · CHỈ GỬI CHO NGƯỜI BÁN</label>
+                    <div class="token-row"><code id="sellerToken"></code></div><label>MÃ RIÊNG NGƯỜI NHẬN · CHỈ GỬI CHO
+                        NGƯỜI NHẬN</label>
+                    <div class="token-row"><code id="buyerToken"></code></div>
+                    <div class="countdown-wrap">
+                        <div class="countdown-line"><span>THỜI GIAN CÒN LẠI</span><b id="countdown">10:00</b></div>
+                        <div class="progress-track"><i id="progress"></i></div>
+                    </div>
+                    <div class="confirm-actions"><button class="button button-secondary" data-party="seller">Người bán
+                            xác nhận</button><button class="button button-primary" data-party="buyer">Người nhận xác
+                            nhận</button></div>
+                    <div class="confirmation-state"><span id="sellerState">○ Người bán chưa xác nhận</span><span
+                            id="buyerState">○ Người nhận chưa xác nhận</span></div>
+                    <div id="sessionMessage" class="inline-message" hidden></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="location" class="form-label">Địa Chỉ / Khu Vực (Location)</label>
-                    <input type="text" id="location" name="location" class="form-input" placeholder="Ví dụ: Quận 1, TP. Hồ Chí Minh" required>
+            </section>
+            <aside class="panel issue-aside"><span class="panel-kicker">SECURE HANDOFF</span>
+                <div class="handshake-visual">
+                    <div class="handshake-node">SELLER<span>01</span></div>
+                    <div class="handshake-connector"><i></i><i></i><i></i></div>
+                    <div class="handshake-node handshake-recipient">BUYER<span>02</span></div>
+                    <div class="handshake-center">⇄</div>
                 </div>
-
-                <div class="form-group">
-                    <label for="password" class="form-label">Mật Khẩu (Password)</label>
-                    <input type="password" id="password" name="password" class="form-input" placeholder="Tối thiểu 6 ký tự" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="pass" class="form-label">Xác Nhận Mật Khẩu (Confirm Password)</label>
-                    <input type="password" id="pass" name="pass" class="form-input" placeholder="Nhập lại mật khẩu" required>
-                </div>
-
-                <div style="margin-top: 1.75rem;">
-                    <button type="submit" class="btn btn-primary btn-block">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="8.5" cy="7.5" r="4"/>
-                            <line x1="20" y1="8" x2="20" y2="14"/>
-                            <line x1="23" y1="11" x2="17" y2="11"/>
-                        </svg>
-                        Đăng Ký & Xác Thực Đại Lý
-                    </button>
-                </div>
-            </form>
+                <div class="issuance-step"><b>01</b><span><strong>Tạo token phiên</strong><small>Ngẫu nhiên · dùng một
+                            lần</small></span></div>
+                <div class="issuance-step"><b>02</b><span><strong>Hai bên đồng thuận</strong><small>Seller + Buyer
+                            confirmation</small></span></div>
+                <div class="issuance-step"><b>03</b><span><strong>Ghi nhận quyền sở hữu</strong><small>On-chain · atomic
+                            transfer</small></span></div>
+                <div class="aside-callout"><span class="live-dot"></span> TTL ENFORCED · MAX 600S</div>
+            </aside>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
-            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
-        </div>
-    </footer>
-
+    <footer class="footer"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a><span>PRODUCT IDENTITY PROTOCOL · BUILT ON
+            ETHEREUM</span><span>© 2026 ASTRYX LABS</span></footer>
     <script>
-        function validatePassword() {
-            var p1 = document.getElementById('password').value;
-            var p2 = document.getElementById('pass').value;
-            if (p1 !== p2) {
-                alert('Mật khẩu và xác nhận mật khẩu không khớp!');
-                return false;
-            }
-            return true;
-        }
+        let current = null, timer = null;
+        const errorBox = document.getElementById('startError'), sessionMsg = document.getElementById('sessionMessage');
+        function extractHash(s) { try { const u = new URL(s); return u.searchParams.get('code') || s } catch (_) { return s } }
+        document.getElementById('startForm').addEventListener('submit', async e => { e.preventDefault(); const btn = document.getElementById('startButton'); btn.disabled = true; errorBox.hidden = true; try { const res = await fetch('/api/ownership/handshake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ codeHash: extractHash(document.getElementById('transferHash').value.trim()), newOwner: document.getElementById('newOwner').value.trim(), ttlSeconds: 600 }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error); current = data; document.getElementById('sessionPanel').hidden = false; document.getElementById('sessionToken').textContent = data.token; document.getElementById('sellerToken').textContent = data.sellerToken; document.getElementById('buyerToken').textContent = data.buyerToken; startCountdown(Date.parse(data.expiresAt)); document.getElementById('sessionPanel').scrollIntoView({ behavior: 'smooth', block: 'center' }) } catch (err) { errorBox.textContent = err.message; errorBox.hidden = false } finally { btn.disabled = false } });
+        function startCountdown(end) { clearInterval(timer); const paint = () => { const left = Math.max(0, Math.ceil((end - Date.now()) / 1000)); document.getElementById('countdown').textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0'); document.getElementById('progress').style.width = (left / 600 * 100) + '%'; if (left <= 0) { clearInterval(timer); sessionMsg.textContent = 'Phiên đã hết hạn. Quyền sở hữu không thay đổi.'; sessionMsg.hidden = false; document.querySelectorAll('.confirm-actions button').forEach(b => b.disabled = true) } }; paint(); timer = setInterval(paint, 1000) }
+        document.querySelectorAll('.confirm-actions button').forEach(btn => btn.addEventListener('click', async () => { if (!current) return; btn.disabled = true; sessionMsg.hidden = true; try { const party = btn.dataset.party; const res = await fetch('/api/ownership/handshake/' + encodeURIComponent(current.token) + '/confirm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ party, participantToken: current[party + 'Token'] }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error); document.getElementById('sellerState').textContent = (data.sellerConfirmed || data.status === 'completed' ? '✓' : '○') + ' Người bán ' + (data.sellerConfirmed || data.status === 'completed' ? 'đã' : 'chưa') + ' xác nhận'; document.getElementById('buyerState').textContent = (data.buyerConfirmed || data.status === 'completed' ? '✓' : '○') + ' Người nhận ' + (data.buyerConfirmed || data.status === 'completed' ? 'đã' : 'chưa') + ' xác nhận'; if (data.status === 'completed') { clearInterval(timer); document.getElementById('countdown').textContent = 'DONE'; sessionMsg.textContent = 'Bàn giao hoàn tất. Quyền sở hữu mới đã ghi lên blockchain.'; sessionMsg.hidden = false; document.querySelectorAll('.confirm-actions button').forEach(b => b.disabled = true) } else btn.textContent = '✓ Đã xác nhận' } catch (err) { sessionMsg.textContent = err.message; sessionMsg.hidden = false; btn.disabled = false } }));
+        document.getElementById('copyToken').addEventListener('click', async () => { await navigator.clipboard.writeText(current.token); document.getElementById('copyToken').textContent = 'Copied' });
     </script>
 </body>
+
 </html>

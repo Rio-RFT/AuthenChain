@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>QR test fixtures — Astryx</title>
+    <link rel="stylesheet" href="astryx.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="wordmark" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span class="wordmark-dot">.</span></span></a>
+        <nav><a href="/">Tổng quan</a><a href="/createCodes">Nhà sản xuất</a><a href="/verify">Xác thực</a></nav>
+        <a class="nav-cta" href="/verify">Mở scanner <span>↗</span></a>
+    </header>
+    <main class="shell inner-shell">
+        <div class="eyebrow"><span class="live-dot"></span> LOCAL TEST FIXTURES</div>
+        <section class="inner-hero"><div><h1>Ten labels.<br><em>Ready to scan.</em></h1><p>10 QR dưới đây trỏ tới hash sản phẩm demo đã được seed vào Ganache. Quét lần đầu sẽ hiện thẻ xanh; quét lại cùng một mã sẽ kích hoạt cảnh báo thẻ đỏ.</p></div><div class="inner-index">D / 10<br><span>GANACHE FIXTURES</span></div></section>
+        <div class="test-qr-grid" id="qrGrid"></div>
+    </main>
+    <footer class="footer"><a class="wordmark" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span class="wordmark-dot">.</span></span></a><span>DEMO PRODUCT IDENTITIES · GANACHE</span><span><a href="/verify">OPEN VERIFIER ↗</a></span></footer>
+    <script>
+        const fixtures = [
+            ['Anker','Nano Charger 30W','AX-00001','9f95a34e02ef5f9a1a81cc7b11b6ca24b870b4c55b6d63e12a3e665a58a7a1ae'],
+            ['Apple','iPhone 16','AX-000002','3f543a66aabdbc0081eda6c7261d53d79fe2b507efc5e16f65736d20388401e9'],
+            ['Asus','Zenbook 14 OLED','AX-000003','731479cf3ca5898afa8eb44c38210989e9cacbbc31ddbf38cda2fc796a3533f3'],
+            ['Biti’s','Hunter X Lite','AX-000004','2ca6ff492cbb4b6c09094986ba6b1841ff9fad9b98e18108aa5f34b30bfe073e'],
+            ['Canon','EOS R50','AX-000005','87e659ff811584687afd4415323690a8227454c7e1a36deaa7d7a425f7b3ab1a'],
+            ['Dell','XPS 13','AX-000006','9e5b8137fe624b199786460b58814e41e0f0974c19b08b7056805f67db770a26'],
+            ['Garmin','Forerunner 265','AX-000007','b36f0c7df2bb6072ec9ec5b2766a9b85a319cd25f16cab194b29b94d1ea515e5'],
+            ['Logitech','MX Master 3S','AX-000008','6ff29c65aeb77c68b93c83ab595e230306ee4b4d866ada8f6558745465b2951e'],
+            ['Nike','Air Max DN','AX-000009','e03ebea482ff28b952f847f9c6665ae8b089bdb6ed756b7aa6a020ac0557984d'],
+            ['Samsung','Galaxy S25','AX-000010','c691ae1305fbfeaf38dc2b10377e0d5fd28b31511a7d2002f189d0c8de095a27']
+        ];
+        const grid = document.getElementById('qrGrid');
+        fixtures.forEach(([brand,model,serial,hash],index) => {
+            const productCode = serial;
+            const url = `${location.origin}/verify?code=${encodeURIComponent(productCode)}`;
+            const card = document.createElement('article'); card.className = 'test-qr-card';
+            const text = document.createElement('div'); text.className = 'test-qr-info';
+            text.innerHTML = `<span class="panel-kicker">FIXTURE ${(index+1).toString().padStart(2,'0')}</span><h2></h2><p></p><code></code><div class="test-qr-links"></div>`;
+            text.querySelector('h2').textContent = brand; text.querySelector('p').textContent = `${model} · ${serial}`; text.querySelector('code').textContent = `0x${hash}`;
+            const open = document.createElement('a'); open.className = 'button button-secondary'; open.href=url; open.textContent='Mở xác thực ↗';
+            const download = document.createElement('a'); download.className = 'text-link'; download.textContent='Tải QR ↓'; download.download=`astryx-${serial}.png`;
+            const qr = document.createElement('div'); qr.className='test-qr-code'; qr.id=`qr-${index}`;
+            const qrImage = new Image(); qrImage.width=148; qrImage.height=148; qrImage.alt=`QR sản phẩm ${serial} · ${brand} ${model}`; qrImage.src=`/api/qr?code=${encodeURIComponent(productCode)}`; qrImage.onerror=()=>{qr.textContent='Không tạo được QR cho serial này'}; qr.append(qrImage); download.href=qrImage.src;
+            text.querySelector('.test-qr-links').append(open,download); card.append(qr,text); grid.append(card);
+        });
+    </script>
+</body>
+</html>

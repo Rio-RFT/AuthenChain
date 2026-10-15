@@ -1,249 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác Thực Sản Phẩm & Nguồn Gốc | AuthenChain</title>
-    <link rel="icon" href="Pics/logo.png">
-    <link rel="stylesheet" href="minimal.css">
-    <style>
-        .result-box {
-            display: none;
-            margin-top: 2rem;
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .status-badge-verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: #ecfdf5;
-            color: #059669;
-            padding: 0.35rem 0.85rem;
-            border-radius: var(--radius-full);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .status-badge-warning {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: #fef2f2;
-            color: #dc2626;
-            padding: 0.35rem 0.85rem;
-            border-radius: var(--radius-full);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 6px;
-            bottom: 6px;
-            width: 2px;
-            background: var(--border-color);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 1.25rem;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -2rem;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--text-main);
-            border: 3px solid #ffffff;
-            box-shadow: 0 0 0 1px var(--border-color);
-        }
-
-        .timeline-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .timeline-meta {
-            font-size: 0.825rem;
-            color: var(--text-muted);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Verify a product — Astryx</title>
+    <link rel="stylesheet" href="astryx.css">
+    <script src="/vendor/html5-qrcode.min.js"></script>
 </head>
+
 <body>
-
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="brand-logo">
-                <span class="brand-badge">AC</span>
-                <span>AuthenChain</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Trang chủ</a></li>
-                <li><a href="createCodes.html" class="nav-link">Nhà sản xuất</a></li>
-                <li><a href="createRetailer.html" class="nav-link">Đại lý bán lẻ</a></li>
-                <li><a href="verify.html" class="nav-link btn-link active">Tra cứu / Xác thực</a></li>
-            </ul>
-        </div>
+    <header class="topbar"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a>
+        <nav><a href="/">Tổng quan</a><a href="/createCodes">Nhà sản xuất</a><a href="/createRetailer">Đối tác</a></nav>
+        <a class="nav-cta" href="/verify">Xác thực <span>↗</span></a>
     </header>
-
-    <!-- Main Content -->
-    <main class="main-wrapper">
-        <section class="page-header">
-            <div class="page-tag">Truy Xuất Nguồn Gốc & Chống Giả</div>
-            <h1 class="page-title">Xác Thực Mã Sản Phẩm</h1>
-            <p class="page-subtitle">Nhập mã định danh băm hoặc quét mã QR in trên tem bao bì để tra cứu dữ liệu gốc được lưu trữ trực tiếp trên Smart Contract.</p>
+    <main class="shell inner-shell">
+        <div class="eyebrow"><span class="live-dot"></span> PUBLIC VERIFICATION PORTAL</div>
+        <section class="inner-hero">
+            <div>
+                <h1>Know the<br><em>real story.</em></h1>
+                <p>Quét mã QR hoặc nhập mã định danh để xác minh sản phẩm trực tiếp trên sổ cái.</p>
+            </div>
+            <div class="inner-index">A / 02<br><span>AUTHENTICITY CHECK</span></div>
         </section>
-
-        <!-- Search Form -->
-        <div class="form-container">
-            <form id="verifyForm" onsubmit="handleVerify(event)">
-                <div class="form-group">
-                    <label for="productCodeInput" class="form-label">Mã Định Danh Sản Phẩm (Product Code / Hash)</label>
-                    <input type="text" id="productCodeInput" class="form-input" placeholder="Dán mã băm (ví dụ: b8867a5089f214...)" required>
-                    <div class="form-helper">Mã này có thể lấy từ việc quét tem QR trên sản phẩm.</div>
+        <div class="verify-layout">
+            <section class="panel verify-panel">
+                <div class="panel-heading">
+                    <div><span class="panel-kicker">01 — SCAN OR ENTER</span>
+                        <h2>Kiểm tra sản phẩm</h2>
+                    </div><span class="panel-symbol">⌗</span>
                 </div>
-
-                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
-                    <button type="submit" id="submitBtn" class="btn btn-primary" style="flex: 1;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"/>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                        </svg>
-                        Kiểm Tra Trên Sổ Cái
-                    </button>
+                <div id="reader" class="camera-box">
+                    <div class="scan-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                    <div class="camera-placeholder"><span>⌗</span><b>Camera scanner</b><small>Hướng camera vào mã QR sản
+                            phẩm</small></div>
                 </div>
-            </form>
-        </div>
-
-        <!-- Verification Results -->
-        <div id="resultBox" class="result-box" style="max-width: 680px; margin-left: auto; margin-right: auto;">
-            <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <span id="statusBadge" class="status-badge-verified">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        Đã Xác Thực Trên Blockchain
-                    </span>
-                    <h2 id="resBrand" style="font-size: 1.35rem; font-weight: 700; margin-top: 0.5rem;">-</h2>
-                </div>
-                <div id="resModel" style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted);">-</div>
-            </div>
-
-            <div style="padding: 1.75rem 2rem;">
-                <div style="margin-bottom: 1.5rem;">
-                    <span class="data-label">Mô tả sản phẩm</span>
-                    <p id="resDesc" style="font-size: 0.95rem; color: var(--text-main); margin-top: 0.25rem;">-</p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
-                    <div>
-                        <span class="data-label">Nhà sản xuất</span>
-                        <div id="resManufacturer" style="font-weight: 600; font-size: 0.95rem;">-</div>
+                <div id="scanStatus" class="scan-status" aria-live="polite">Đưa QR vào vùng camera · tự động quét</div>
+                <div class="button-row"><select id="cameraSelect" class="camera-select" aria-label="Chọn camera" hidden></select><button type="button" class="button button-secondary" id="cameraButton">◉ &nbsp;
+                        Bật camera</button><span class="or-label">HOẶC NHẬP MÃ</span><a class="text-link" href="/test-qr">Mở bộ QR test ↗</a></div>
+                <form id="verifyForm"><label for="productCode">Mã sản phẩm</label>
+                    <div class="input-with-button"><input id="productCode" placeholder="Dán serial, hash hoặc URL QR…"
+                            autocomplete="off" required><button class="button button-primary" id="submitBtn">Xác thực
+                            <span>→</span></button></div><small class="field-hint">Nhận serial như AX-00001, SHA-256 hash hoặc URL QR Astryx.</small>
+                </form>
+                <div id="verifyError" class="inline-message" hidden></div>
+            </section>
+            <aside class="panel side-panel"><span class="panel-kicker">TRUST, IN THREE STEPS</span>
+                <div class="steps">
+                    <div class="step"><b>01</b>
+                        <div><strong>Quét tem</strong><span>Camera đọc định danh duy nhất.</span></div>
                     </div>
-                    <div>
-                        <span class="data-label">Địa điểm sản xuất</span>
-                        <div id="resLocation" style="font-weight: 600; font-size: 0.95rem;">-</div>
+                    <div class="step"><b>02</b>
+                        <div><strong>Đối chiếu sổ cái</strong><span>Hash được kiểm tra với Ethereum.</span></div>
+                    </div>
+                    <div class="step"><b>03</b>
+                        <div><strong>Nhận kết quả</strong><span>Lượt quét lặp sẽ hiển thị cảnh báo.</span></div>
                     </div>
                 </div>
-
-                <div>
-                    <span class="data-label">Hành trình chuỗi cung ứng (Blockchain Provenance)</span>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-title">Xuất xưởng & Đăng ký Smart Contract</div>
-                            <div class="timeline-meta" id="resTimestamp">Thời gian: -</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot" style="background: var(--accent-emerald);"></div>
-                            <div class="timeline-title">Xác thực tính toàn vẹn nguồn gốc</div>
-                            <div class="timeline-meta">Dữ liệu đối chiếu khớp 100% với Sổ cái Blockchain</div>
-                        </div>
-                    </div>
+                <div class="side-note"><span class="live-dot"></span>
+                    <div><b>Blockchain connected</b><small>Ethereum · Ganache network</small></div>
                 </div>
-            </div>
+            </aside>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>&copy; 2026 AuthenChain. Đề tài Nghiên cứu Ứng dụng Blockchain trong Chuỗi cung ứng.</div>
-            <div>Ethereum Ganache &bull; Smart Contract &bull; Web3</div>
-        </div>
-    </footer>
-
+    <footer class="footer"><a class="wordmark" href="/"><span
+                class="brand-mark"><i></i><i></i><i></i></span><span>ASTRYX<span
+                    class="wordmark-dot">.</span></span></a><span>PRODUCT IDENTITY PROTOCOL · BUILT ON
+            ETHEREUM</span><span>© 2026 ASTRYX LABS</span></footer>
     <script>
-        function handleVerify(e) {
-            e.preventDefault();
-            var code = document.getElementById('productCodeInput').value.trim();
-            if (!code) return;
-
-            var submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Đang kiểm tra...";
-
-            fetch('/scan', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code: code })
-            })
-            .then(function(res) {
-                if (!res.ok) throw new Error('Không tìm thấy hoặc có lỗi');
-                return res.json();
-            })
-            .then(function(data) {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Kiểm Tra Trên Sổ Cái";
-
-                if (!data || !data.name) {
-                    alert('Mã sản phẩm không tồn tại trên hệ thống Blockchain!');
-                    return;
-                }
-
-                document.getElementById('resultBox').style.display = 'block';
-                document.getElementById('resBrand').innerText = data.name || 'Không rõ';
-                document.getElementById('resModel').innerText = "Model: " + (data.model || 'N/A');
-                document.getElementById('resDesc').innerText = data.description || 'Không có mô tả';
-                document.getElementById('resManufacturer').innerText = data.manufacturerName || 'N/A';
-                document.getElementById('resLocation').innerText = data.manufacturerLocation || 'N/A';
-                document.getElementById('resTimestamp').innerText = "Ngày sản xuất: " + (data.manufacturerTimestamp || 'N/A');
-            })
-            .catch(function(err) {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Kiểm Tra Trên Sổ Cái";
-                alert('Không tìm thấy thông tin sản phẩm trên Blockchain hoặc mạng bị lỗi!');
-            });
+        const form = document.getElementById('verifyForm'), input = document.getElementById('productCode'), errorBox = document.getElementById('verifyError');
+        errorBox.setAttribute('role', 'alert'); errorBox.setAttribute('aria-live', 'polite');
+        function readableError(error, context) { const name = error && error.name || '', detail = typeof error === 'string' ? error : error && error.message || ''; if (!window.isSecureContext) return 'Điện thoại cần mở ứng dụng bằng HTTPS để dùng camera. localhost chỉ an toàn trên chính thiết bị chạy server; địa chỉ IP laptop qua HTTP sẽ bị trình duyệt chặn camera.'; if (name === 'NotAllowedError' || name === 'PermissionDeniedError') return 'Trình duyệt chưa được cấp quyền camera cho trang này. Cho phép Camera trong cài đặt trang rồi tải lại.'; if (name === 'NotFoundError' || name === 'DevicesNotFoundError') return 'Không tìm thấy camera trên thiết bị này. Bạn có thể nhập mã sản phẩm thủ công.'; if (name === 'NotReadableError' || name === 'TrackStartError' || name === 'AbortError') return 'Camera đang bị ứng dụng khác sử dụng hoặc không khởi động được. Đóng ứng dụng Camera/Zoom đang mở rồi thử lại.'; if (name === 'OverconstrainedError' || name === 'ConstraintNotSatisfiedError') return 'Camera không hỗ trợ cấu hình này. Hãy chọn camera khác hoặc nhập mã thủ công.'; return (context ? context + ': ' : '') + (detail || 'Không thể mở camera. Kiểm tra quyền truy cập, thiết bị và thử lại; bạn vẫn có thể nhập mã thủ công.') }
+        function showError(message) { errorBox.textContent = message || 'Đã có lỗi. Vui lòng thử lại hoặc nhập mã sản phẩm thủ công.'; errorBox.hidden = false }
+        function extractCode(raw) { try { const u = new URL(raw); return u.searchParams.get('code') || raw } catch (_) { return raw } }
+        let verificationPending = false;
+        function playScanBeep() { try { const Audio = window.AudioContext || window.webkitAudioContext; if (!Audio) return; const ctx = new Audio(), oscillator = ctx.createOscillator(), gain = ctx.createGain(); oscillator.type = 'sine'; oscillator.frequency.value = 880; gain.gain.setValueAtTime(0.0001, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + 0.015); gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.16); oscillator.connect(gain); gain.connect(ctx.destination); oscillator.start(); oscillator.stop(ctx.currentTime + 0.17); oscillator.onended = () => ctx.close() } catch (_) { } }
+        let scannerStopPromise = null;
+        async function stopHtml5Scanner() { if (!scanner) return; if (!scannerStopPromise) scannerStopPromise = Promise.resolve().then(() => scanner.stop()).finally(() => { scannerStopPromise = null }); return scannerStopPromise }
+        async function verify(raw, locationData, scanned = false, scannerAlreadyStopped = false) { if (verificationPending && !scannerAlreadyStopped) return; const productCode = extractCode(raw).trim(); if (!productCode) return; verificationPending = true; if (scanned) playScanBeep(); if (scanner && !scannerAlreadyStopped) { try { await stopHtml5Scanner() } catch (_) { } } if (nativeStream) stopNativeCamera(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.textContent = 'Đang xác minh…'; errorBox.hidden = true; try { const response = await fetch('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productCode, location: locationData }) }); const data = await response.json(); if (!response.ok && data.valid !== false) throw new Error(data.error || data.message || 'Không thể xác thực.'); sessionStorage.setItem('astryx:lastVerification', JSON.stringify({ data, codeHash:data.codeHash || productCode, productCode, verifiedAt: Date.now() })); window.location.href = '/verify-result' } catch (e) { verificationPending = false; showError(readableError(e, 'Xác thực')); btn.disabled = false; btn.innerHTML = 'Xác thực <span>→</span>' } }
+        function showResult(d, hash) { const good = d.card === 'green', product = d.product || {}; document.getElementById('resultBox').hidden = false; document.getElementById('resultBox').className = 'result-card ' + (good ? 'is-good' : 'is-alert'); document.getElementById('resultBadge').textContent = good ? '● THẺ XANH · AUTHENTIC' : '● THẺ ĐỎ · CẢNH BÁO'; document.getElementById('resultTitle').textContent = good ? [product.brand, product.model].filter(Boolean).join(' · ') || 'Hàng chính hãng' : 'Cần kiểm tra sản phẩm'; document.getElementById('resultMessage').textContent = d.message || d.error || ''; document.getElementById('resultHash').textContent = hash; document.getElementById('scanCount').textContent = d.scanCount === undefined ? '—' : d.scanCount + ' lượt'; document.getElementById('activatedAt').textContent = d.activatedAt ? new Date(d.activatedAt * 1000).toLocaleString('vi-VN') : '—'; document.getElementById('resultStamp').textContent = good ? '✓' : '!'; const timeline = document.getElementById('provenance'); timeline.replaceChildren(); const records = d.provenance || []; const makeStep = (title, detail, tag) => { const item = document.createElement('div'); item.className = 'timeline-item'; const dot = document.createElement('i'), body = document.createElement('div'), name = document.createElement('b'), meta = document.createElement('span'), label = document.createElement('small'); name.textContent = title; meta.textContent = detail; label.textContent = tag; body.append(name, meta); item.append(dot, body, label); timeline.append(item) }; makeStep('Nhà sản xuất', [product.manufacturerName, product.manufacturerLocation, product.issuedAt ? new Date(product.issuedAt).toLocaleString('vi-VN') : null].filter(Boolean).join(' · ') || 'Định danh trên blockchain', 'ORIGIN'); records.slice(1).forEach((r, i) => makeStep(i === records.length - 2 ? 'Người sở hữu hiện tại' : 'Chuyển giao quyền sở hữu', [r.ownerAddress, r.transferTime ? new Date(r.transferTime).toLocaleString('vi-VN') : null].filter(Boolean).join(' · '), i === records.length - 2 ? 'OWNER' : 'CUSTODY')); if (records.length < 2) makeStep('Người sở hữu hiện tại', String(d.currentOwner || 'Ví nhà sản xuất'), 'OWNER'); const wrap = document.getElementById('historyWrap'), list = document.getElementById('historyList'); list.replaceChildren(); if (d.previousScans && d.previousScans.length) { wrap.hidden = false; d.previousScans.forEach(x => { const row = document.createElement('div'); row.className = 'history-row'; row.textContent = [x.scanTime ? new Date(x.scanTime).toLocaleString('vi-VN') : 'Lượt quét trước', x.location || 'Không có vị trí', x.ipAddress || ''].filter(Boolean).join(' · '); list.append(row) }) } else wrap.hidden = true; document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+        form.addEventListener('submit', e => { e.preventDefault(); const go = loc => verify(input.value, loc); if (navigator.geolocation) navigator.geolocation.getCurrentPosition(p => go({ latitude: p.coords.latitude, longitude: p.coords.longitude }), () => go(null), { timeout: 2500 }); else go(null) });
+        let scanner = null, nativeStream = null, nativeFrame = 0;
+        function stopNativeCamera() { if (nativeFrame) cancelAnimationFrame(nativeFrame); nativeFrame = 0; if (nativeStream) nativeStream.getTracks().forEach(track => track.stop()); nativeStream = null; const reader = document.getElementById('reader'), placeholder = document.createElement('div'); placeholder.className = 'camera-placeholder'; placeholder.innerHTML = '<span>⌗</span><b>Camera scanner</b><small>Hướng camera vào mã QR sản phẩm</small>'; reader.replaceChildren(placeholder, document.querySelector('.scan-corners')); reader.classList.remove('is-scanning'); const btn = document.getElementById('cameraButton'); btn.dataset.active = ''; btn.textContent = '◉  Bật camera' }
+        async function startNativeCamera() { const mobile = matchMedia('(pointer:coarse)').matches; nativeStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: mobile ? 'environment' : 'user' } }, audio: false }); const video = document.createElement('video'); video.autoplay = true; video.playsInline = true; video.muted = true; video.style.cssText = 'width:100%;height:100%;object-fit:cover'; video.srcObject = nativeStream; const reader = document.getElementById('reader'), frame = document.querySelector('.scan-corners'); reader.replaceChildren(video, frame); reader.classList.add('is-scanning'); await video.play(); const detector = new BarcodeDetector({ formats: ['qr_code'] }); const scan = async () => { if (!nativeStream) return; try { const codes = await detector.detect(video); if (codes.length && codes[0].rawValue) { const value = codes[0].rawValue, box = codes[0].boundingBox; if (box && frame) { const bounds = reader.getBoundingClientRect(), scale = Math.max(bounds.width / video.videoWidth, bounds.height / video.videoHeight), cropX = (video.videoWidth * scale - bounds.width) / 2, cropY = (video.videoHeight * scale - bounds.height) / 2; frame.classList.add('is-locked'); frame.style.width = '0'; frame.style.height = '0'; frame.style.left = '0'; frame.style.top = '0'; const corners = codes[0].cornerPoints || [{x:box.x,y:box.y},{x:box.x+box.width,y:box.y},{x:box.x+box.width,y:box.y+box.height},{x:box.x,y:box.y+box.height}]; corners.forEach((point, i) => { const mark = frame.children[i]; if (mark) { mark.style.left = `${point.x * scale - cropX}px`; mark.style.top = `${point.y * scale - cropY}px`; mark.style.right = 'auto'; mark.style.bottom = 'auto' } }) } const status = document.getElementById('scanStatus'); if (status) status.textContent = 'Đã bắt được QR · đang xác minh…'; setTimeout(() => verify(value, null, true), 140); return } } catch (_) { } nativeFrame = requestAnimationFrame(scan) }; scan() }
+        async function startHtml5Camera(preferredId) {
+            if (!scanner) scanner = new Html5Qrcode('reader', { verbose:false, formatsToSupport:[Html5QrcodeSupportedFormats.QR_CODE], experimentalFeatures:{useBarCodeDetectorIfSupported:false} });
+            const mobile = matchMedia('(pointer:coarse)').matches, options = {fps:mobile?10:15, disableFlip:false};
+            const onSuccess = text => { if(verificationPending)return; verificationPending=true; const frame=document.querySelector('#reader .scan-corners'); if(frame) frame.classList.add('is-locked'); const status=document.getElementById('scanStatus'); if(status) status.textContent='QR đã nhận · đang xác minh…'; document.getElementById('cameraButton').dataset.active=''; document.getElementById('cameraButton').textContent='◉  Bật camera'; setTimeout(async()=>{try{await stopHtml5Scanner()}catch(_){}verify(text,null,true,true)},80); };
+            let ranked=[];
+            try {
+                const cameras=await Html5Qrcode.getCameras();
+                const rank=label=>{const name=(label||'').toLowerCase();if(/virtual|obs|poco|phone|android/.test(name))return 20;if(/acer|integrated|built.?in|webcam|user facing|usb camera/.test(name))return 0;return 10};
+                ranked=cameras.slice().sort((a,b)=>mobile?Number(!/back|environment|rear/i.test(a.label))-Number(!/back|environment|rear/i.test(b.label)):rank(a.label)-rank(b.label));
+                const select=document.getElementById('cameraSelect');select.replaceChildren();ranked.forEach(camera=>{const option=document.createElement('option');option.value=camera.id;option.textContent=camera.label||`Camera …${String(camera.id).slice(-6)}`;select.append(option)});select.hidden=ranked.length<2;
+                const best=preferredId||select.value||ranked[0]?.id;if(best&&ranked.some(camera=>camera.id===best))select.value=best;
+            } catch(_) { }
+            const selected=document.getElementById('cameraSelect').value, choices=[];
+            if(mobile&&!preferredId) choices.push({facingMode:'environment'});
+            if(preferredId||selected) choices.push(preferredId||selected);
+            if(mobile&&preferredId) choices.push({facingMode:'environment'});
+            ranked.forEach(camera=>{if(!choices.some(choice=>typeof choice==='string'&&choice===camera.id))choices.push(camera.id)});
+            if(!mobile) choices.push({facingMode:'user'});
+            let lastError;
+            for(const choice of choices){try{
+                await scanner.start(choice,options,onSuccess,()=>{}); scannerStopPromise=null;
+                const reader=document.getElementById('reader'),overlay=document.querySelector('.scan-corners');if(overlay&&overlay.parentElement!==reader)reader.append(overlay);reader.classList.add('is-scanning');
+                const status=document.getElementById('scanStatus');if(status)status.textContent='Camera đang quét toàn khung hình · có thể đổi camera trong danh sách';return;
+            }catch(error){lastError=error;if(error&&(error.name==='NotAllowedError'||error.name==='PermissionDeniedError'))break}}
+            throw lastError||new Error('Không khởi động được camera.');
         }
+        document.getElementById('cameraButton').addEventListener('click', async () => { const btn=document.getElementById('cameraButton');try{if(btn.dataset.active){if(scanner){await stopHtml5Scanner();document.getElementById('reader').classList.remove('is-scanning');btn.dataset.active='';btn.textContent='◉  Bật camera'}else stopNativeCamera();return}if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Trình duyệt không hỗ trợ camera. Hãy dùng trình duyệt mới tại localhost/HTTPS hoặc dán mã thủ công.');errorBox.hidden=true;if(window.Html5Qrcode){try{await startHtml5Camera()}catch(libraryError){if('BarcodeDetector'in window){stopNativeCamera();await startNativeCamera()}else throw libraryError}}else if('BarcodeDetector'in window)await startNativeCamera();else throw new Error('Không tải được thư viện quét QR. Hãy làm mới trang hoặc nhập mã thủ công.');btn.dataset.active='1';btn.textContent='■  Tắt camera'}catch(e){stopNativeCamera();btn.dataset.active='';btn.textContent='◉  Bật camera';showError(readableError(e,'Camera'))}});
+        document.getElementById('cameraSelect').addEventListener('change',async event=>{const select=event.currentTarget;if(!document.getElementById('cameraButton').dataset.active)return;try{if(scanner)await stopHtml5Scanner();await startHtml5Camera(select.value)}catch(e){showError(readableError(e,'Đổi camera'))}});
+        const query = new URLSearchParams(location.search).get('code'); if (query) verify(query, null);
     </script>
 </body>
+
 </html>
